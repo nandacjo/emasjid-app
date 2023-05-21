@@ -1,6 +1,12 @@
 // Paket package yang di gunakan //
 composer require barryvdh/laravel-debugbar -dev
+
 composer require --dev barryvdh/laravel-ide-helper
+    php artisan clear-compiled
+    php artisan ide-helper:generate
+    terus tarok ini: di composer post-update-cmd:  "@php artisan ide-helper:generate", "@php artisan ide-helper:meta"
+    composer update
+
 composer require laravelcollective/html
 
 composer require laravel/ui
@@ -11,7 +17,10 @@ npm install & npm run dev
 composer require --dev laravel-lang/common
 php artisan lang:add id
 php artisan lang:update
-lalu settind di app config: timezone, locale, fallback_locale, faker_locale
+lalu settind di app config: timezone, locale, fallback_locale, faker_locale menjadi id-ID
 
 
 php artisan make:migration add_masjid_id_to_users --table=users => menambah kolom ke table yang sudah ada
+
+composer require laracasts/flash
+   tambahkan @include('flash::message') di atas @yield('content') bagian layour
