@@ -16,6 +16,7 @@
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
     <title>Blank Page | AdminKit Demo</title>
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
     <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -120,7 +121,7 @@
                     </li>
                 </ul>
 
-                <div class="sidebar-cta">
+                {{-- <div class="sidebar-cta">
                     <div class="sidebar-cta-content">
                         <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
                         <div class="mb-3 text-sm">
@@ -130,7 +131,7 @@
                             <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </nav>
 
@@ -319,10 +320,9 @@
             </nav>
 
             <main class="content">
+                @include('flash::message')
                 <div class="container-fluid p-0">
-
                     @yield('content')
-
                 </div>
             </main>
 
