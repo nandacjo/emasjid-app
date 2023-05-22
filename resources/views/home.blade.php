@@ -1,5 +1,7 @@
 @extends('layouts.app_adminkit')
 
+@section('title', 'Beranda')
+
 @section('content')
     <h1 class="h3 mb-3">Beranda E-Masjid</h1>
 

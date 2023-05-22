@@ -15,7 +15,7 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
-    <title>Blank Page | AdminKit Demo</title>
+    <title>E-Masjid | @yield('title')</title>
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
     <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
@@ -35,14 +35,14 @@
                         Pages
                     </li>
 
-                    <li class="sidebar-item active">
+                    <li class="sidebar-item {{ Route::is('home') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('home') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span
                                 class="align-middle">Beranda</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ Route::is('masjid.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('masjid.create') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Mesjid</span>
                         </a>

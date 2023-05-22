@@ -1,5 +1,7 @@
 @extends('layouts.app_adminkit')
 
+@section('title', 'Form Masjid')
+
 @section('content')
     <h1 class="h3 mb-3">Form Masjid</h1>
 
