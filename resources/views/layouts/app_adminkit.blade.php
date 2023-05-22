@@ -303,8 +303,8 @@
                                     class="text-dark">{{ auth()->user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
-                                        data-feather="user"></i> Ubah Profil</a>
+                                <a class="dropdown-item" href="{{ route('user-profil.edit', 0) }}"><i
+                                        class="align-middle me-1" data-feather="user"></i> Ubah Profil</a>
                                 <a class="dropdown-item" href="{{ route('logout-user') }}">Log out</a>
                             </div>
                         </li>

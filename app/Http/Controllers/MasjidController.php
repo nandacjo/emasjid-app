@@ -18,7 +18,7 @@ class MasjidController extends Controller
         $masjid = auth()->user()->masjid;
         $masjid = $masjid ?? new Masjid();
 
-        return view('masjid.masjid-form', [
+        return view('masjid.masjid_form', [
             'masjid' => $masjid,
         ]);
     }
