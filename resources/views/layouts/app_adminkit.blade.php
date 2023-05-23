@@ -35,6 +35,7 @@
                         Pages
                     </li>
 
+                    <!-- Beranda -->
                     <li class="sidebar-item {{ Route::is('home') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('home') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span
@@ -42,9 +43,18 @@
                         </a>
                     </li>
 
+                    <!-- Data Masjid -->
                     <li class="sidebar-item {{ Route::is('masjid.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('masjid.create') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Mesjid</span>
+                        </a>
+                    </li>
+
+                    <!-- Kas Masjid -->
+                    <li class="sidebar-item {{ Route::is('kas.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('kas.index') }}">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Kas
+                                Mesjid</span>
                         </a>
                     </li>
 
@@ -313,7 +323,11 @@
             </nav>
 
             <main class="content">
-                @include('flash::message')
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('flash::message')
+                    </div>
+                </div>
                 <div class="container-fluid p-0">
                     @yield('content')
                 </div>
