@@ -16,6 +16,7 @@ class KasController extends Controller
     public function create()
     {
         $kas = new Kas();
+        $kas['masjid'] = $kas->masjid->name;
         return view('kas.create', compact('kas'));
     }
 
