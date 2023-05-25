@@ -1,55 +1,61 @@
 @extends('layouts.app_adminkit')
 
 @section('content')
-    <h1 class="h3 mb-3">{{ isset($kas) ? 'Edit Data Kas' : 'Tambah Data Kas' }}</h1>
+    <h1 class="h3 mb-3">{{ isset($kas->id) ? 'Edit Data Kas' : 'Tambah Data Kas' }}</h1>
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
 
-                    @if (isset($kas))
-                        {!! Form::model($kas, ['route' => ['kas.update', $kas->id], 'method' => 'PUT']) !!}
-                    @else
-                        {!! Form::open(['route' => 'kas.store', 'method' => 'POST']) !!}
-                    @endif
+
+                    {{-- {!! Form::model($kas, ['route' => ['kas.update', $kas->id], 'method' => 'PUT']) !!} --}}
+
+                    {!! Form::model($kas, [
+                        'route' => isset($kas->id) ? ['kas.update', $kas->id] : 'kas.store',
+                        'method' => isset($kas->id) ? 'PUT' : 'POST',
+                    ]) !!}
 
 
-                    <div class="form-group mt-3">
+
+                    <div class="form-group mb-3">
                         {!! Form::label('tanggal', 'Tanggal') !!}
-                        {!! Form::date('tanggal', null, ['class' => 'form-control']) !!}
+                        {!! Form::date('tanggal', $kas->tanggal ?? now(), ['class' => 'form-control']) !!}
+                        <span class="text-danger">{{ $errors->first('tanggal') }}</span>
                     </div>
 
-                    <div class="form-group mt-3">
+                    <div class="form-group mb-3">
                         {!! Form::label('kategori', 'Kategori') !!}
                         {!! Form::text('kategori', null, ['class' => 'form-control']) !!}
+                        <span class="text-danger">{{ $errors->first('kategori') }}</span>
                     </div>
 
-                    <div class="form-group mt-3">
+                    <div class="form-group mb-3">
                         {!! Form::label('keterangan', 'Keterangan') !!}
-                        {!! Form::textarea('keterangan', null, ['class' => 'form-control']) !!}
+                        {!! Form::textarea('keterangan', null, ['class' => 'form-control', 'rows' => 3]) !!}
+                        <span class="text-danger">{{ $errors->first('keterangan') }}</span>
                     </div>
 
-                    <div class="form-group mt-3">
-                        {!! Form::label('jenis', 'Jenis') !!}
-                        {!! Form::select('jenis', ['masuk' => 'Masuk', 'keluar' => 'Keluar'], null, ['class' => 'form-control']) !!}
+                    <div class="form-group mb-3">
+                        {!! Form::label('jenis', 'Jenis Transaksi') !!}
+                        <div class="form-check">
+                            {!! Form::radio('jenis', 'masuk', true, ['id' => 'jenis_masuk', 'class' => 'form-check-input']) !!}
+                            {!! Form::label('jenis_masuk', 'Masuk', ['class' => 'form-check-label']) !!}
+                        </div>
+                        <div class="form-check">
+                            {!! Form::radio('jenis', 'keluar', null, ['id' => 'jenis_keluar', 'class' => 'form-check-input']) !!}
+                            {!! Form::label('jenis_keluar', 'Keluar', ['class' => 'form-check-label']) !!}
+                        </div>
+                        <span class="text-danger">{{ $errors->first('jenis') }}</span>
                     </div>
 
-                    <div class="form-group mt-3">
+                    <div class="form-group mb-3">
                         {!! Form::label('jumlah', 'Jumlah') !!}
                         {!! Form::number('jumlah', null, ['class' => 'form-control']) !!}
+                        <span class="text-danger">{{ $errors->first('jumlah') }}</span>
                     </div>
 
-                    <div class="form-group mt-3">
-                        {!! Form::label('saldo_akhir', 'Saldo Akhir') !!}
-                        {!! Form::number('saldo_akhir', null, ['class' => 'form-control']) !!}
-                    </div>
 
-                    <div class="form-group mt-3">
-                        {!! Form::label('created_by', 'Created By') !!}
-                        {!! Form::text('created_by', null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    {!! Form::submit(isset($kas) ? 'Update' : 'Simpan', ['class' => 'btn btn-success mt-3']) !!}
+                    {!! Form::submit(isset($kas->id) ? 'Update' : 'Simpan', ['class' => 'btn btn-success mb-3']) !!}
 
                     {!! Form::close() !!}
                 </div>

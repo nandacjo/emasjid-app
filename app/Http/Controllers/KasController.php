@@ -9,30 +9,62 @@ class KasController extends Controller
 {
     public function index()
     {
-        $kas = Kas::all();
+        $kas = Kas::latest()->paginate(50);
         return view('kas.index', compact('kas'));
     }
 
     public function create()
     {
-        return view('kas.create');
+        $kas = new Kas();
+        return view('kas.create', compact('kas'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'masjid_id' => 'required',
+        $requestData = $request->validate([
             'tanggal' => 'required|date',
             'keterangan' => 'required',
+            'kategori' => 'nullable',
             'jenis' => 'required|in:masuk,keluar',
             'jumlah' => 'required|integer',
-            'saldo_akhir' => 'required|integer',
-            'created_by' => 'required',
         ]);
 
-        Kas::create($request->all());
+        $kasAkhir = Kas::where('masjid_id', auth()->user()->masjid_id)
+            ->orderBy('tanggal', 'desc')->first();
 
-        return redirect()->route('kas.index')->with('success', 'Data kas berhasil disimpan.');
+        $saldoAkhir = 0;
+        if (isset($kasAkhir->saldo_akhir)) {
+            // saldo terkahir di tambah dengna jumlah transaksi masuk / keluar
+            if ($requestData['jenis'] == 'masuk') {
+                $saldoAkhir = $kasAkhir->saldo_akhir + $requestData['jumlah'];
+            } else {
+                if ($kasAkhir) {
+                    $saldoAkhir = $kasAkhir->saldo_akhir - $requestData['jumlah'];
+                }
+            }
+        } else {
+            // saldo pertama
+            if ($requestData['jenis'] == 'keluar') {
+                flash('Maaf saldo belum ada isinya, silahkan melakukan isi pulang')->error();
+                return back();
+            }
+            $saldoAkhir = $requestData['jumlah'];
+        }
+
+        if ($saldoAkhir <= -1) {
+            flash('Data kas gagal ditambahkan. Saldo akhir di kurang transaksi tidak boleh kurang dari nol 0')->error();
+            return back();
+        }
+
+        $kas = new Kas();
+        $kas->fill($requestData);
+        $kas->masjid_id = auth()->user()->masjid_id;
+        $kas->created_by = auth()->user()->id;
+        $kas->saldo_akhir = $saldoAkhir;
+        $kas->save();
+
+        flash('Data kas berhasil disimpan.')->success();
+        return back();
     }
 
     public function show(Kas $kas)

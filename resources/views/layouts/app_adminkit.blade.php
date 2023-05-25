@@ -324,8 +324,21 @@
 
             <main class="content">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+
+                        <!-- Flash message dari library laracast-->
                         @include('flash::message')
+
+                        <!-- Menampilkan semua error di laravel-->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="container-fluid p-0">

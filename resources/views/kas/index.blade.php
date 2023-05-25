@@ -35,7 +35,7 @@
                 <tbody>
                     @foreach ($kas as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->masjid_id }}</td>
                             <td>{{ $data->tanggal }}</td>
                             <td>{{ $data->kategori }}</td>
@@ -58,6 +58,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $kas->links() }}
         </div>
     </div>
 @endsection
