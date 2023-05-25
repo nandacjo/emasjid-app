@@ -40,9 +40,12 @@
                             <td>{{ $data->tanggal }}</td>
                             <td>{{ $data->kategori }}</td>
                             <td>{{ $data->keterangan }}</td>
-                            <td>{{ $data->jenis }}</td>
-                            <td>{{ $data->jumlah }}</td>
-                            <td>{{ $data->saldo_akhir }}</td>
+                            <td>
+                                <span
+                                    class="badge {{ $data->jenis == 'keluar' ? 'bg-danger' : 'bg-success' }}">{{ Str::ucfirst($data->jenis) }}</span>
+                            </td>
+                            <td>{{ formatRupiah($data->jumlah, true) }}</td>
+                            <td>{{ formatRupiah($data->saldo_akhir, true) }}</td>
                             <td>{{ $data->created_by }}</td>
                             <td>
                                 <a href="{{ route('kas.show', $data->id) }}" class="btn btn-primary">Detail</a>
