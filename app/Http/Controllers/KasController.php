@@ -9,7 +9,7 @@ class KasController extends Controller
 {
     public function index()
     {
-        $kas = Kas::latest()->paginate(50);
+        $kas = Kas::UserMasjid()->latest()->paginate(50);
         return view('kas.index', compact('kas'));
     }
 

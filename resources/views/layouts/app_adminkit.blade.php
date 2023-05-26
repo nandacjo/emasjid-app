@@ -67,7 +67,7 @@
                     <i class="hamburger align-self-center"></i>
                 </a>
 
-                {{-- <h2 class="h1 fw-bold">{{ auth()->user()->masjid->nama }}</h2> --}}
+                {{-- <h2 class="h1 fw-bold">{{ auth()->user()->masjid?->nama }}< /h2> --}}
 
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
