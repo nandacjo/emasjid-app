@@ -16,8 +16,8 @@ class KasController extends Controller
     public function create()
     {
         $kas = new Kas();
-        $kas['masjid'] = $kas->masjid->name;
-        return view('kas.create', compact('kas'));
+        $saldoAkhir = Kas::SaldoAkhir();
+        return view('kas.create', compact('kas', 'saldoAkhir'));
     }
 
     public function store(Request $request)
@@ -30,27 +30,18 @@ class KasController extends Controller
             'jumlah' => 'required|integer',
         ]);
 
-        $kasAkhir = Kas::where('masjid_id', auth()->user()->masjid_id)
-            ->orderBy('tanggal', 'desc')->first();
+        // $kasAkhir = Kas::where('masjid_id', auth()->user()->masjid_id)
+        //     ->orderBy('created_at', 'desc')->first();
 
-        $saldoAkhir = 0;
-        if (isset($kasAkhir->saldo_akhir)) {
-            // saldo terkahir di tambah dengna jumlah transaksi masuk / keluar
-            if ($requestData['jenis'] == 'masuk') {
-                $saldoAkhir = $kasAkhir->saldo_akhir + $requestData['jumlah'];
-            } else {
-                if ($kasAkhir) {
-                    $saldoAkhir = $kasAkhir->saldo_akhir - $requestData['jumlah'];
-                }
-            }
+        // refactor code dengan membuat function scope di modelnya
+        $saldoAkhir = Kas::SaldoAkhir();
+        if ($requestData['jenis'] == 'masuk') {
+            $saldoAkhir += $requestData['jumlah'];
         } else {
-            // saldo pertama
-            if ($requestData['jenis'] == 'keluar') {
-                flash('Maaf saldo belum ada isinya, silahkan melakukan isi pulang')->error();
-                return back();
-            }
-            $saldoAkhir = $requestData['jumlah'];
+            $saldoAkhir -= $requestData['jumlah'];
         }
+
+
 
         if ($saldoAkhir <= -1) {
             flash('Data kas gagal ditambahkan. Saldo akhir di kurang transaksi tidak boleh kurang dari nol 0')->error();
