@@ -27,8 +27,10 @@ class KasController extends Controller
             'keterangan' => 'required',
             'kategori' => 'nullable',
             'jenis' => 'required|in:masuk,keluar',
-            'jumlah' => 'required|integer',
+            'jumlah' => 'required ',
         ]);
+
+        $requestData['jumlah'] = str_replace('.', '', $requestData['jumlah']);
 
         // $kasAkhir = Kas::where('masjid_id', auth()->user()->masjid_id)
         //     ->orderBy('created_at', 'desc')->first();

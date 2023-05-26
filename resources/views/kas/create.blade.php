@@ -10,7 +10,7 @@
 
                     {{-- {!! Form::model($kas, ['route' => ['kas.update', $kas->id], 'method' => 'PUT']) !!} --}}
                     <h4>Saldo Akhir Saat Ini : <span class="bg-warning p-1 rounded-2">
-                            {{ formatRupiah($saldoAkhir) }}</span>
+                            {{ formatRupiah($saldoAkhir, true) }}</span>
                     </h4>
 
                     {!! Form::model($kas, [
@@ -53,7 +53,7 @@
 
                     <div class="form-group mb-3">
                         {!! Form::label('jumlah', 'Jumlah Transaksi') !!}
-                        {!! Form::number('jumlah', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('jumlah', null, ['class' => 'form-control rupiah']) !!}
                         <span class="text-danger">{{ $errors->first('jumlah') }}</span>
                     </div>
 
