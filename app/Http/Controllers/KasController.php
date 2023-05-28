@@ -43,8 +43,6 @@ class KasController extends Controller
             $saldoAkhir -= $requestData['jumlah'];
         }
 
-
-
         if ($saldoAkhir <= -1) {
             flash('Data kas gagal ditambahkan. Saldo akhir di kurang transaksi tidak boleh kurang dari nol 0')->error();
             return back();
