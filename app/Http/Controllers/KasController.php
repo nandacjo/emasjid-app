@@ -62,7 +62,7 @@ class KasController extends Controller
 
     public function show(Kas $kas)
     {
-        return view('kas.show', compact('kas'));
+        // return view('kas.show', compact('kas'));
     }
 
     public function edit($id)
@@ -87,11 +87,53 @@ class KasController extends Controller
         return redirect()->route('kas.index');
     }
 
-    public function destroy(Kas $kas)
+    public function destroy($id)
     {
-        $kas->delete();
+        $kas = Kas::findOrFail($id);
+        $kas->keterangan = 'Data di hapus oleh' . auth()->user()->name;
+        $kas->save();
 
-        return redirect()->route('kas.index')->with('success', 'Data kas berhasil dihapus.');
+        $kasBaru = $kas->replicate();
+        $kasBaru->keterangan = 'Perbaikan data id ke' . $kas->id;
+
+        $saldoAkhir = Kas::SaldoAkhir();
+        // jika membatalkan pemasukkan, maka kas berkurang
+        if ($kas->jenis == 'masuk') {
+            $saldoAkhir -= $kas->jumlah;
+        }
+
+        if ($kas->jenis == 'keluar') {
+            $saldoAkhir += $kas->jumlah;
+        }
+
+        $kasBaru->saldo_akhir = $saldoAkhir;
+        $kasBaru->save();
+
+        flash('Data kas berhasil disimpan');
+        return redirect()->route('kas.index');
+    }
+
+    public function destroyCaraSatu($id)
+    {
+        $kas = Kas::findOrFail($id);
+        $kas->keterangan = 'Data di hapus oleh' . auth()->user()->name;
+        $kas->save();
+
+        $saldoAkhir = Kas::SaldoAkhir();
+        $kasBaru = new Kas();
+
+        $kasBaru->tanggal = $kas->tanggal;
+        $kasBaru->kategori = $kas->kategori;
+        $kasBaru->keterangan = 'Perbaikan Data';
+        $kasBaru->jenis = $kas->jenis;
+        $kasBaru->jumlah = $kas->jumlah;
+        $kasBaru->masjid_id = $kas->masjid_id;
+        $kasBaru->created_by = $kas->created_by;
+        $kasBaru->saldo_akhir = $saldoAkhir - $kas->jumlah;
+        $kasBaru->save();
+
+        flash('Data kas berhasil diperbaiki');
+        return redirect()->route('kas.index');
     }
 
     public function hitungSaldoAkhir()

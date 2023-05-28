@@ -46,23 +46,33 @@
           <td>{{ $data->keterangan }}</td>
           <td>
             <span class="badge bg-success">
-              {{ $data->jenis == 'masuk' ? formatRupiah($data->jumlah) : '-' }}
+              {{ $data->jenis == 'masuk' ? formatRupiah($data->jumlah, true) : '-' }}
             </span>
             {{-- <span class="badge {{ $data->jenis == 'keluar' ? 'bg-danger' : 'bg-success' }}">{{ Str::ucfirst($data->jenis) }}</span> --}}
           </td>
           <td>
-            <span class="badge bg-danger">{{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah) : '-' }}</span>
+            <span class="badge bg-danger">{{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah, true) : '-' }}</span>
           </td>
           <td>{{ formatRupiah($data->saldo_akhir, true) }}</td>
           <td>{{ $data->createdBy->name }}</td>
           <td class="d-flex gap-2">
             <a href="{{ route('kas.show', $data->id) }}" class="btn btn-primary btn-sm">Detail</a>
             <a href="{{ route('kas.edit', $data->id) }}" class="btn btn-secondary btn-sm">Edit</a>
-            <form action="{{ route('kas.destroy', $data->id) }}" method="POST" class="d-inline">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-            </form>
+
+            <!-- Tombol Delete -->
+            {!! Form::open(
+            [
+            "method" => "DELETE",
+            "route" => ["kas.destroy", $data->id],
+            "style" =>'display.inline'
+            ]
+            ) !!}
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+            {!! Form::close() !!}
+            <!-- Tombol Delete -->
+
           </td>
         </tr>
         @endforeach
