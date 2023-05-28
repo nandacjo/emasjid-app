@@ -37,4 +37,9 @@ class Kas extends Model
     {
         return $query->where('masjid_id', auth()->user()->masjid_id);
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'id';
+    }
 }

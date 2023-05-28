@@ -17,7 +17,8 @@ class KasController extends Controller
     {
         $kas = new Kas();
         $saldoAkhir = Kas::SaldoAkhir();
-        return view('kas.create', compact('kas', 'saldoAkhir'));
+        $disable = [];
+        return view('kas.create', compact('kas', 'saldoAkhir', 'disable'));
     }
 
     public function store(Request $request)
@@ -64,26 +65,26 @@ class KasController extends Controller
         return view('kas.show', compact('kas'));
     }
 
-    public function edit(Kas $kas)
+    public function edit($id)
     {
-        return view('kas.edit', compact('kas'));
+        $kas = Kas::findOrFail($id);
+        $saldoAkhir = Kas::SaldoAkhir();
+        $disable = ['disabled'];
+        return view('kas.create', compact('kas', 'saldoAkhir', 'disable'));
     }
 
-    public function update(Request $request, Kas $kas)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'masjid_id' => 'required',
-            'tanggal' => 'required|date',
+        $requestData = $request->validate([
+            'kategori' => 'nullable',
             'keterangan' => 'required',
-            'jenis' => 'required|in:masuk,keluar',
-            'jumlah' => 'required|integer',
-            'saldo_akhir' => 'required|integer',
-            'created_by' => 'required',
         ]);
+        $kas = Kas::findOrFail($id);
+        $kas->fill($requestData);
+        $kas->save();
 
-        $kas->update($request->all());
-
-        return redirect()->route('kas.index')->with('success', 'Data kas berhasil diperbarui.');
+        flash('Data kas berhasil diperbarui');
+        return redirect()->route('kas.index');
     }
 
     public function destroy(Kas $kas)
