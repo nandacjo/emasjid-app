@@ -10,7 +10,9 @@ class KasController extends Controller
     public function index()
     {
         $kas = Kas::UserMasjid()->latest()->paginate(50);
-        return view('kas.index', compact('kas'));
+        $saldoAkhir = Kas::SaldoAkhir();
+
+        return view('kas.index', compact('kas', 'saldoAkhir'));
     }
 
     public function create()
