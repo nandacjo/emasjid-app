@@ -53,7 +53,7 @@
           <td>
             <span class="badge bg-danger">{{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah, true) : '-' }}</span>
           </td>
-          <td>{{ formatRupiah($data->saldo_akhir, true) }}</td>
+          <td>{{ formatRupiah($data->masjid->saldo_akhir, true) }}</td>
           <td>{{ $data->createdBy->name }}</td>
           <td class="d-flex gap-2">
             <a href="{{ route('kas.show', $data->id) }}" class="btn btn-primary btn-sm">Detail</a>

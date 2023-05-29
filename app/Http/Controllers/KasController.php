@@ -53,8 +53,9 @@ class KasController extends Controller
         $kas->fill($requestData);
         $kas->masjid_id = auth()->user()->masjid_id;
         $kas->created_by = auth()->user()->id;
-        $kas->saldo_akhir = $saldoAkhir;
+        // $kas->saldo_akhir = $saldoAkhir;
         $kas->save();
+        auth()->user()->masjid->update(['saldo_akhir' => $saldoAkhir]);
 
         flash('Data kas berhasil disimpan.')->success();
         return back();
@@ -148,7 +149,7 @@ class KasController extends Controller
                 $saldo -= $data->jumlah;
             }
 
-            $data->saldo_akhir = $saldo;
+            // $data->saldo_akhir = $saldo;
             $data->save();
         }
 
