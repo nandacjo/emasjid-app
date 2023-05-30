@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class KasController extends Controller
@@ -33,30 +34,67 @@ class KasController extends Controller
             'jumlah' => 'required ',
         ]);
 
+        /**
+         * | Validasi tanggal transaksi
+         * | Jika tanggal transaksi atau bulan tidak sama dengan
+         * | Tanggal transaksi
+         */
+        $tanggalTransaksi = Carbon::parse($requestData['tanggal']);
+        $tahunBulanTransaksi = $tanggalTransaksi->format('Ym');
+        $tahunBulanSekarang = Carbon::now()->format('Ym');
+
+        /**
+         * | Melakukan pengecekan tanggal transaski
+         */
+        if($tahunBulanTransaksi != $tahunBulanSekarang){
+            flash('Data kas gagal ditambahkan, Transaksi hanya bisa dilakukan untuk bulan ini')->error();
+            return back();
+        }
+
+        /**
+         * | Menghilangkan titik di request jumlah
+         * | Karena dia input menggunakan library jquery musk
+         * | Jadi nilainya pake titik
+         */
         $requestData['jumlah'] = str_replace('.', '', $requestData['jumlah']);
 
         // $kasAkhir = Kas::where('masjid_id', auth()->user()->masjid_id)
         //     ->orderBy('created_at', 'desc')->first();
 
         // refactor code dengan membuat function scope di modelnya
+
+        /**
+         * | Function scope saldo akhir,terletak di model Kas
+         */
         $saldoAkhir = Kas::SaldoAkhir();
+
+        /**
+         * | Cek jenis transaski yang masuk, masuk atau keluar
+         */
         if ($requestData['jenis'] == 'masuk') {
             $saldoAkhir += $requestData['jumlah'];
         } else {
             $saldoAkhir -= $requestData['jumlah'];
         }
 
+        /**
+         * | Cek apakah saldo akhir apakah lebih kecil atau sama dengan -1
+         * | Jika true kembalikan error
+         */
         if ($saldoAkhir <= -1) {
             flash('Data kas gagal ditambahkan. Saldo akhir di kurang transaksi tidak boleh kurang dari nol 0')->error();
             return back();
         }
 
+        // menyimpan data kas
         $kas = new Kas();
         $kas->fill($requestData);
         $kas->masjid_id = auth()->user()->masjid_id;
         $kas->created_by = auth()->user()->id;
         // $kas->saldo_akhir = $saldoAkhir;
         $kas->save();
+
+        // update saldo akhir di table mesjid berdasarkan user pengelola masjid
         auth()->user()->masjid->update(['saldo_akhir' => $saldoAkhir]);
 
         flash('Data kas berhasil disimpan.')->success();
