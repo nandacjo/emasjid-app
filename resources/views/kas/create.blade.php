@@ -54,7 +54,7 @@
 
         <div class="form-group mb-3">
           {!! Form::label('jumlah', 'Jumlah Transaksi') !!}
-          {!! Form::text('jumlah', $kas->jumlah, array_merge(['class' => 'form-control rupiah'], $disable)) !!}
+          {!! Form::text('jumlah', $kas->jumlah, array_merge(['class' => 'form-control rupiah'])) !!}
           <span class="text-danger">{{ $errors->first('jumlah') }}</span>
         </div>
 

@@ -119,8 +119,34 @@ class KasController extends Controller
         $requestData = $request->validate([
             'kategori' => 'nullable',
             'keterangan' => 'required',
+            'jumlah' => 'required'
         ]);
+        $jumlah = str_replace('.', '', $requestData['jumlah']);
+        // Saldo akhir
+        $saldoAkhir = Kas::SaldoAkhir();
+
+        // Ambil data kas berdasarkan id user
         $kas = Kas::findOrFail($id);
+
+        // jika jenis masuk, maka saldo akhir di kurang kas jumlah yang di edit
+        if($kas->jenis == 'masuk'){
+            $saldoAkhir -= $kas->jumlah;
+            $saldoAkhir += $jumlah;
+
+        }
+
+        // jika jenis keluar, maka saldo akhir di tambah kas jumlah yang di edit
+        if($kas->jenis == 'keluar'){
+            $saldoAkhir += $kas->jumlah;
+            // Saldo akhir akan di update di table masjid
+            $saldoAkhir -= $jumlah;
+        }
+
+
+        auth()->user()->masjid->update(['saldo_akhir' => $saldoAkhir]);
+
+        // Ini akan di save ke tabel kas
+        $requestData['jumlah'] = $jumlah;
         $kas->fill($requestData);
         $kas->save();
 
@@ -129,6 +155,27 @@ class KasController extends Controller
     }
 
     public function destroy($id)
+    {
+        $kas = Kas::findOrFail($id);
+        $saldoAkhir = Kas::SaldoAkhir();
+        
+        // jika membatalkan pemasukkan, maka kas berkurang
+        if ($kas->jenis == 'masuk') {
+            $saldoAkhir -= $kas->jumlah;
+        }
+
+        if ($kas->jenis == 'keluar') {
+            $saldoAkhir += $kas->jumlah;
+        }
+
+        $kas->delete();
+        auth()->user()->masjid->update(['saldo_akhir' => $saldoAkhir]);
+
+        flash('Data kas berhasil disimpan');
+        return redirect()->route('kas.index');
+    }
+
+    public function destroyDua($id)
     {
         $kas = Kas::findOrFail($id);
         $kas->keterangan = 'Data di hapus oleh' . auth()->user()->name;
