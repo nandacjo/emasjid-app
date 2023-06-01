@@ -13,7 +13,8 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        //
+        $profil = Profil::UserMasjid()->latest()->paginate(50);
+        return view('profil.index', compact('profil'));
     }
 
     /**
@@ -21,7 +22,8 @@ class ProfilController extends Controller
      */
     public function create()
     {
-        //
+        $profil = new Profil();
+        return view('profil.form', compact('profil'));
     }
 
     /**

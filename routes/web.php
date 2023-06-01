@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\MasjidController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserProfilController;
 use App\Http\Middleware\EnsureDataMasjidCompleted;
 use Illuminate\Routing\RouteGroup;
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('masjid', MasjidController::class);
 
     Route::middleware(EnsureDataMasjidCompleted::class)->group(function () {
+        Route::resource('profil', ProfilController::class);
         Route::resource('kas', KasController::class);
         Route::resource('user-profil', UserProfilController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
