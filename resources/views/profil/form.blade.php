@@ -34,12 +34,13 @@
           {!! Form::label('konten', 'konten') !!}
           {!! Form::textarea('konten', null, [
           'class' => 'form-control',
-          'rows' => 3,
-          'placeholder' => 'Isi profil']) !!}
+          'placeholder' => 'Isi profil',
+          'id' => 'summernote'
+          ]) !!}
           <span class="text-danger">{{ $errors->first('konten') }}</span>
         </div>
 
-        <!-- Button -->
+        <!-- Button  -->
         {!! Form::submit(isset($profil->id) ? 'Update' : 'Simpan', ['class' => 'btn btn-success mb-3']) !!}
 
         {!! Form::close() !!}

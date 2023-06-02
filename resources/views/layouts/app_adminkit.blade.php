@@ -290,10 +290,25 @@
   </div>
 
   <script src="{{ asset('adminkit/js/app.js') }}"></script>
-  <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.min.js') }}"></script>
   <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+  <script src="{{ asset('js/popper.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+  <!-- Summer note -->
+  <!-- include summernote css/js-->
+  <link href="{{ asset('summernote/sm/summernote-bs4.css') }}" rel="stylesheet">
+  <script src="{{  asset('summernote/sm/summernote-bs4.js') }}"></script>
   <script>
     $(document).ready(function() {
+
+      // summer note
+      $('#summernote').summernote({
+        tabsize: 2
+        , height: 200
+      });
+
+      //   library js jquery musk
       $('.rupiah').mask("#.##0", {
         reverse: true
       });
