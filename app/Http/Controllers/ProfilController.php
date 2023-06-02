@@ -23,7 +23,12 @@ class ProfilController extends Controller
     public function create()
     {
         $profil = new Profil();
-        return view('profil.form', compact('profil'));
+        $listKategori = [
+            'visi-misi' => 'Visi Misi',
+            'sejarah' => 'Sejarah',
+            'struktur-organisasi' => 'Struktur Organisasi'
+        ];
+        return view('profil.form', compact('profil', 'listKategori'));
     }
 
     /**

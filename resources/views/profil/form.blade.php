@@ -12,38 +12,34 @@
         'method' => isset($profil->id) ? 'PUT' : 'POST',
         ]) !!}
 
+        <!-- List Kategori -->
         <div class="form-group mb-3">
           {!! Form::label('kategori', 'Kategori') !!}
-          {!! Form::text('kategori', null, ['class' => 'form-control']) !!}
+          {!! Form::select('kategori', $listKategori, null, [
+          'class' => 'form-control',
+          ]) !!}
           <span class="text-danger">{{ $errors->first('kategori') }}</span>
         </div>
 
+        <!-- Judul -->
         <div class="form-group mb-3">
-          {!! Form::label('keterangan', 'Keterangan') !!}
-          {!! Form::textarea('keterangan', null, ['class' => 'form-control', 'rows' => 3]) !!}
-          <span class="text-danger">{{ $errors->first('keterangan') }}</span>
+          {!! Form::label('judul', 'Judul') !!}
+          {!! Form::text('judul', $profil->judul, array_merge(['
+          class' => 'form-control rupiah'])) !!}
+          <span class="text-danger">{{ $errors->first('judul') }}</span>
         </div>
 
+        <!-- Konten -->
         <div class="form-group mb-3">
-          {!! Form::label('jenis', 'Jenis Transaksi') !!}
-          <div class="form-check mb-2">
-            {!! Form::radio('jenis', 'masuk', true, ['id' => 'jenis_masuk', 'class' => 'form-check-input']) !!}
-            {!! Form::label('jenis_masuk', 'Pemasukan', ['class' => 'form-check-label']) !!}
-          </div>
-
-          <div class="form-check">
-            {!! Form::radio('jenis', 'keluar', null, ['id' => 'jenis_keluar', 'class' => 'form-check-input']) !!}
-            {!! Form::label('jenis_keluar', 'Pengeluaran', ['class' => 'form-check-label']) !!}
-          </div>
-          <span class="text-danger">{{ $errors->first('jenis') }}</span>
+          {!! Form::label('konten', 'konten') !!}
+          {!! Form::textarea('konten', null, [
+          'class' => 'form-control',
+          'rows' => 3,
+          'placeholder' => 'Isi profil']) !!}
+          <span class="text-danger">{{ $errors->first('konten') }}</span>
         </div>
 
-        <div class="form-group mb-3">
-          {!! Form::label('jumlah', 'Jumlah Transaksi') !!}
-          {!! Form::text('jumlah', $profil->jumlah, array_merge(['class' => 'form-control rupiah'])) !!}
-          <span class="text-danger">{{ $errors->first('jumlah') }}</span>
-        </div>
-
+        <!-- Button -->
         {!! Form::submit(isset($profil->id) ? 'Update' : 'Simpan', ['class' => 'btn btn-success mb-3']) !!}
 
         {!! Form::close() !!}
