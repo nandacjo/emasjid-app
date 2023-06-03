@@ -57,32 +57,7 @@ class ProfilController extends Controller
 
         // dd($konten);
         // Mencocokkan semua gambar yang terdapat dalam konten menggunkana regular expression
-        $pattern = '/<img.*?src="(data:image\/(.*?);base64,.*?)".*?>/i';
-        preg_match_all($pattern, $konten, $matches);
-        $gambarBase64 = $matches[1];
-        $masjidId = auth()->user()->masjid_id;
 
-        foreach ($gambarBase64 as $gambar) {
-            $data = explode(',', $gambar);
-            $gambarData = $data[1];
-            $mime = $data[0];
-            $mimeParts = explode('/', $mime);
-
-            // Mendapatak ekstensi file dari tipe MIME menggunakn pustak finfo
-            $finfo = finfo_open();
-            $ext = finfo_buffer($finfo, base64_decode($gambarData), FILEINFO_MIME_TYPE);
-            finfo_close($finfo);
-
-            $ext = explode('/', $ext)[1];
-
-            $namaFile = "profil/$masjidId/" . uniqid() . '.' . $ext;
-            Storage::disk('public')->put($namaFile, base64_decode($gambarData));
-            $namaFile = "/storage/$namaFile";
-            $konten = str_replace($gambar, $namaFile, $konten);
-        }
-
-        // Mengganti nilai konten dengan konten yang telah di ubah menjadi URL gambar
-        $requestData['konten'] = $konten;
 
         $requestData['created_by'] = auth()->user()->id;
         $requestData['masjid_id'] = auth()->user()->masjid_id;
