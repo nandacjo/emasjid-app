@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('judul');
             $table->string('kategori');
-            $table->string('konten');
+            $table->longText('konten');
             $table->integer('created_by');
             $table->timestamps();
         });

@@ -15,6 +15,7 @@ export default defineConfig({
 
     resolve: {
         alias: {
+            "$": "jQuery",
             "~bootstrap": path.resolve(__dirname, 'node_modules/bootstrap')
         }
     }

@@ -25,7 +25,7 @@
         <div class="form-group mb-3">
           {!! Form::label('judul', 'Judul') !!}
           {!! Form::text('judul', $profil->judul, array_merge(['
-          class' => 'form-control rupiah'])) !!}
+          class' => 'form-control'])) !!}
           <span class="text-danger">{{ $errors->first('judul') }}</span>
         </div>
 
@@ -48,4 +48,5 @@
     </div>
   </div>
 </div>
+
 @endsection

@@ -19,6 +19,9 @@
 
   <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>
@@ -299,7 +302,7 @@
   <!-- include summernote css/js-->
   <link href="{{ asset('summernote/sm/summernote-bs4.css') }}" rel="stylesheet">
   <script src="{{  asset('summernote/sm/summernote-bs4.js') }}"></script>
-  <script>
+  <script type="module">
     $(document).ready(function() {
 
       // summer note
