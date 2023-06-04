@@ -11,6 +11,9 @@ class StoreProfilRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (auth()->user()->masjid_id) {
+            return true;
+        }
         return false;
     }
 
@@ -22,7 +25,9 @@ class StoreProfilRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'kategori' => 'required',
+            'judul' => 'required',
+            'konten' => 'required'
         ];
     }
 }

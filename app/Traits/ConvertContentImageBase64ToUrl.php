@@ -11,6 +11,7 @@ trait ConvertContentImageBase64ToUrl
 {
     protected function convertContentImageBase64TouUrl($konten)
     {
+        // Mencocokkan semua gambar yang terdapat dalam konten menggunkana regular expression
         $pattern = '/<img.*?src="(data:image\/(.*?);base64,.*?)".*?>/i';
         preg_match_all($pattern, $konten, $matches);
         $gambarBase64 = $matches[1];

@@ -1,39 +1,45 @@
 <?php
 
 
- namespace App\Repository;
+namespace App\Repository;
 
- use App\Repository\Interfaces\ProfilRepositoryInterface;
- use App\Models\Profil;
+use App\Repository\Interfaces\ProfilRepositoryInterface;
+use App\Models\Profil;
 
- class ProfilRepository implements ProfilRepositoryInterface
- {
+
+class ProfilRepository implements ProfilRepositoryInterface
+{
     public function allProfil()
     {
         return Profil::UserMasjid()->latest()->paginate(50);
     }
 
-    public function storeProfil($data)
+    public function storeProfil($request)
     {
-        return Profil::create($data);
+        $requestData = $request->validated();
+        $requestData['created_by'] = auth()->user()->id;
+        $requestData['masjid_id'] = auth()->user()->masjid_id;
+
+        return Profil::create($requestData);
     }
 
-    public function findProfil($id)
+    public function findProfil($profil)
     {
-        return Profil::find($id);
+        return $profil;
     }
 
-    public function updateProfil($data, $id)
+    public function updateProfil($request, $profil)
     {
-        $profil = Profil::where('id', $id)->first();
-        $profil->name = $data['name'];
-        $profil->slug = $data['slug'];
-        $profil->save();
+        $requestData = $request->validated();
+
+        $requestData['created_by'] = auth()->user()->id;
+        $requestData['masjid_id'] = auth()->user()->masjid_id;
+
+        $profil->update($requestData);
     }
 
-    public function destroyProfil($id)
+    public function destroyProfil($profil)
     {
-        $Profil = Profil::find($id);
-        $Profil->delete();
+        $profil->delete();
     }
- }
+}

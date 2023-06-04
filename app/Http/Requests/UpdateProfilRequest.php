@@ -11,7 +11,7 @@ class UpdateProfilRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateProfilRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'kategori' => 'required',
+            'judul' => 'required',
+            'konten' => 'required'
         ];
     }
 }

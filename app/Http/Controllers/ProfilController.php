@@ -45,25 +45,10 @@ class ProfilController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProfilRequest $request)
     {
-        $requestData = $request->validate([
-            'kategori' => 'required',
-            'judul' => 'required',
-            'konten' => 'required'
-        ]);
-
-        $konten = $requestData['konten']; // mendapakan nilai konte
-
-        // dd($konten);
-        // Mencocokkan semua gambar yang terdapat dalam konten menggunkana regular expression
-
-
-        $requestData['created_by'] = auth()->user()->id;
-        $requestData['masjid_id'] = auth()->user()->masjid_id;
-        $requestData['slug'] = Str::slug($request->judul);
-        $this->profilRepository->storeProfil($requestData);
-        flash('Data suda disimpan');
+        $this->profilRepository->storeProfil($request);
+        flash('Data sudah disimpan');
         return back();
     }
 
@@ -72,7 +57,8 @@ class ProfilController extends Controller
      */
     public function show(Profil $profil)
     {
-        //
+        $profil = $this->profilRepository->findProfil($profil);
+        return view('profil.show', compact('profil'));
     }
 
     /**
@@ -80,7 +66,13 @@ class ProfilController extends Controller
      */
     public function edit(Profil $profil)
     {
-        //
+        $profil = $this->profilRepository->findProfil($profil);
+        $listKategori = [
+            'visi-misi' => 'Visi Misi',
+            'sejarah' => 'Sejarah',
+            'struktur-organisasi' => 'Struktur Organisasi'
+        ];
+        return view('profil.form', compact('profil', 'listKategori'));
     }
 
     /**
@@ -88,7 +80,9 @@ class ProfilController extends Controller
      */
     public function update(UpdateProfilRequest $request, Profil $profil)
     {
-        //
+        $this->profilRepository->updateProfil($request, $profil);
+        flash('Data berhadi di update')->success();
+        return back();
     }
 
     /**
@@ -96,6 +90,8 @@ class ProfilController extends Controller
      */
     public function destroy(Profil $profil)
     {
-        //
+        $this->profilRepository->destroyProfil($profil);
+        flash('Dash sudah dihapus');
+        return back();
     }
 }

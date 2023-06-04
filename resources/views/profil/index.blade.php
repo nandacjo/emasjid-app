@@ -26,42 +26,29 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Tanggal</th>
-          <th>Kategori</th>
-          <th>Keterangan</th>
+          <th>Judul</th>
+          <th>Konten</th>
+          <th>Dibuat Oleh</th>
           <th>Pemasukkan</th>
-          <th>Pengeluaran</th>
-          <th>Diinput Oleh</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         @foreach ($profil as $data)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td>{{ $data->tanggal->translatedFormat('D, d-m-Y') }}</td>
           <td>{{ $data->kategori ?? 'Umum' }}</td>
-          <td>{{ $data->keterangan }}</td>
-          <td>
-            <span class="badge bg-success">
-              {{ $data->jenis == 'masuk' ? formatRupiah($data->jumlah, true) : '-' }}
-            </span>
-            {{-- <span class="badge {{ $data->jenis == 'keluar' ? 'bg-danger' : 'bg-success' }}">{{ Str::ucfirst($data->jenis) }}</span> --}}
-          </td>
-          <td>
-            <span class="badge bg-danger">{{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah, true) : '-' }}</span>
-          </td>
-          {{-- <td>{{ formatRupiah($data->masjid->saldo_akhir, true) }}</td> --}}
+          <td>{{strip_tags($data->konten) }}</td>
           <td>{{ $data->createdBy->name }}</td>
+
           <td class="d-flex gap-2">
-            <a href="{{ route('kas.show', $data->id) }}" class="btn btn-primary btn-sm">Detail</a>
-            <a href="{{ route('kas.edit', $data->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+            <a href="{{ route('profil.show', $data->id) }}" class="btn btn-primary btn-sm">Detail</a>
+            <a href="{{ route('profil.edit', $data->id) }}" class="btn btn-secondary btn-sm">Edit</a>
 
             <!-- Tombol Delete -->
             {!! Form::open(
             [
             "method" => "DELETE",
-            "route" => ["kas.destroy", $data->id],
+            "route" => ["profil.destroy", $data->id],
             "style" =>'display.inline'
             ]
             ) !!}
