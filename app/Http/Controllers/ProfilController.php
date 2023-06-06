@@ -24,8 +24,9 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        $profil = $this->profilRepository->allProfil();
-        return view('profil.index', compact('profil'));
+        $models = $this->profilRepository->allProfil();
+        $title = 'Profil Masjid';
+        return view('profil.index', compact('models', 'title'));
     }
 
     /**
@@ -39,7 +40,8 @@ class ProfilController extends Controller
             'sejarah' => 'Sejarah',
             'struktur-organisasi' => 'Struktur Organisasi'
         ];
-        return view('profil.form', compact('profil', 'listKategori'));
+        $title = 'Tambah data profil';
+        return view('profil.form', compact('profil', 'listKategori', 'title'));
     }
 
     /**
@@ -58,7 +60,8 @@ class ProfilController extends Controller
     public function show(Profil $profil)
     {
         $profil = $this->profilRepository->findProfil($profil);
-        return view('profil.show', compact('profil'));
+        $title = 'Detail Profil';
+        return view('profil.show', compact('profil', 'title'));
     }
 
     /**
@@ -72,7 +75,8 @@ class ProfilController extends Controller
             'sejarah' => 'Sejarah',
             'struktur-organisasi' => 'Struktur Organisasi'
         ];
-        return view('profil.form', compact('profil', 'listKategori'));
+        $title = 'Edit data profil';
+        return view('profil.form', compact('profil', 'listKategori', 'title'));
     }
 
     /**
@@ -81,7 +85,7 @@ class ProfilController extends Controller
     public function update(UpdateProfilRequest $request, Profil $profil)
     {
         $this->profilRepository->updateProfil($request, $profil);
-        flash('Data berhadi di update')->success();
+        flash('Data berhasil di update')->success();
         return back();
     }
 

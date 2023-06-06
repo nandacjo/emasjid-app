@@ -8,12 +8,24 @@ use Illuminate\Http\Request;
 
 class KasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kas = Kas::UserMasjid()->latest()->paginate(50);
-        $saldoAkhir = Kas::SaldoAkhir();
+        $query = Kas::UserMasjid();
 
-        return view('kas.index', compact('kas', 'saldoAkhir'));
+        if ($request->filled('q')) {
+            $query = $query->where('keterangan', 'LIKE', '%' . $request->q . '%');
+        }
+
+        if ($request->filled('tanggal')) {
+            $query = $query->where('tanggal', $request->tangaal);
+        }
+
+        $kas = $query->latest()->paginate(50);
+        $saldoAkhir = Kas::SaldoAkhir();
+        $totalPemasukan = $kas->where('jenis', 'masuk')->sum('jumlah');
+        $totalPengeluaran = $kas->where('jenis', 'keluar')->sum('jumlah');
+
+        return view('kas.index', compact('kas', 'saldoAkhir', 'totalPemasukan', 'totalPengeluaran'));
     }
 
     public function create()
@@ -46,7 +58,7 @@ class KasController extends Controller
         /**
          * | Melakukan pengecekan tanggal transaski
          */
-        if($tahunBulanTransaksi != $tahunBulanSekarang){
+        if ($tahunBulanTransaksi != $tahunBulanSekarang) {
             flash('Data kas gagal ditambahkan, Transaksi hanya bisa dilakukan untuk bulan ini')->error();
             return back();
         }
@@ -129,14 +141,13 @@ class KasController extends Controller
         $kas = Kas::findOrFail($id);
 
         // jika jenis masuk, maka saldo akhir di kurang kas jumlah yang di edit
-        if($kas->jenis == 'masuk'){
+        if ($kas->jenis == 'masuk') {
             $saldoAkhir -= $kas->jumlah;
             $saldoAkhir += $jumlah;
-
         }
 
         // jika jenis keluar, maka saldo akhir di tambah kas jumlah yang di edit
-        if($kas->jenis == 'keluar'){
+        if ($kas->jenis == 'keluar') {
             $saldoAkhir += $kas->jumlah;
             // Saldo akhir akan di update di table masjid
             $saldoAkhir -= $jumlah;
@@ -158,7 +169,7 @@ class KasController extends Controller
     {
         $kas = Kas::findOrFail($id);
         $saldoAkhir = Kas::SaldoAkhir();
-        
+
         // jika membatalkan pemasukkan, maka kas berkurang
         if ($kas->jenis == 'masuk') {
             $saldoAkhir -= $kas->jumlah;

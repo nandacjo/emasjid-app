@@ -3,15 +3,15 @@
 @section('content')
     <div class="row">
         <div class="col text-center fw-bold text-uppercase">
-            <h1 class="h1 fw-bold"> Profil Masjid</h1>
+            <h1 class="h1 fw-bold text-uppercase">{{ $title }} {{ auth()->user()->masjid->nama }}</h1>
             <hr>
         </div>
     </div>
-    <div class="row mb-4 mt-3">
+    {{-- <div class="row mb-4 mt-3">
         <div class="col-md-12">
-            <h2 class="h3">Profil {{ auth()->user()->masjid->nama }}</h2>
+            <h2 class="h3">Profil </h2>
         </div>
-    </div>
+    </div> --}}
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

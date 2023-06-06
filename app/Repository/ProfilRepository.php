@@ -17,8 +17,8 @@ class ProfilRepository implements ProfilRepositoryInterface
     public function storeProfil($request)
     {
         $requestData = $request->validated();
-        $requestData['created_by'] = auth()->user()->id;
-        $requestData['masjid_id'] = auth()->user()->masjid_id;
+        // $requestData['created_by'] = auth()->user()->id;
+        // $requestData['masjid_id'] = auth()->user()->masjid_id;
 
         return Profil::create($requestData);
     }

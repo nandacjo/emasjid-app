@@ -16,7 +16,7 @@ class Profil extends Model
     use ConvertContentImageBase64ToUrl;
 
     protected $contentName = 'konten';
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     // function scoperUserMasjid sudah di pindahkan ke trait hasmasjid
     // public function scopeUserMasjid($q)

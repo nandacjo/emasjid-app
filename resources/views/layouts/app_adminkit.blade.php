@@ -15,13 +15,13 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
-    <title>E-Masjid | @yield('title')</title>
+    <title>E-Masjid | {{ $title ?? '' }}</title>
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
     <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 </head>
 
@@ -65,6 +65,14 @@
                     <li class="sidebar-item {{ Route::is('profil.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('profil.index') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profil
+                                Masjid</span>
+                        </a>
+                    </li>
+
+                    <!-- Kategri Informasi -->
+                    <li class="sidebar-item {{ Route::is('kategori.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('kategori.index') }}">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Kategori
                                 Masjid</span>
                         </a>
                     </li>
