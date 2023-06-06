@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped table-bordered table-hover">
+            <table class="{{ config('app.table_style') }}">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -30,7 +30,7 @@
                         <th>Nama Masjid</th>
                         <th>Keterangan</th>
                         <th>Dibuat Oleh</th>
-                        <th>Aksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,20 +42,35 @@
                             <td>{{ $data->keterangan }}</td>
                             <td>{{ $data->createdBy->name }}</td>
 
-                            <td class="d-flex gap-2">
-                                <a href="{{ route('kategori.edit', $data->id) }}" class="btn btn-secondary btn-sm">Edit</a>
-                                <!-- Tombol Delete -->
-                                {!! Form::open([
-                                    'method' => 'DELETE',
-                                    'route' => ['kategori.destroy', $data->id],
-                                    'style' => 'display.inline',
-                                ]) !!}
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-                                {!! Form::close() !!}
-                                <!-- Tombol Delete -->
+                            <td width='10%' class="text-center">
+                                <div class="">
+                                    <button class="btn btn-danger btn-sm dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu border-0 shadow">
+                                        <li>
+                                            <a href="{{ route('kategori.edit', $data->id) }}" class="dropdown-item">Edit</a>
+                                        </li>
+                                        <li>
+                                            <!-- Tombol Delete -->
+                                            {!! Form::open([
+                                                'method' => 'DELETE',
+                                                'route' => ['kategori.destroy', $data->id],
+                                                'style' => 'display.inline',
+                                            ]) !!}
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                            {!! Form::close() !!}
+                                            <!-- Tombol Delete -->
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+
 
                             </td>
                         </tr>

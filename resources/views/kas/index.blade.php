@@ -46,7 +46,7 @@
             {!! Form::close() !!}
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-striped table-bordered">
+            <table class="{{ config('app.table_style') }}">
                 <thead>
                     <tr>
                         <th>ID</th>

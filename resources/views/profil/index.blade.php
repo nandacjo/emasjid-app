@@ -23,14 +23,14 @@
             </div>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-striped table-bordered">
+            <table class="{{ config('app.table_style') }}">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th width="3%">ID</th>
                         <th>Judul</th>
                         <th>Konten</th>
                         <th>Dibuat Oleh</th>
-                        <th>Pemasukkan</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,22 +41,38 @@
                             <td>{{ strip_tags($data->konten) }}</td>
                             <td>{{ $data->createdBy->name }}</td>
 
-                            <td class="d-flex gap-2">
-                                <a href="{{ route('profil.show', $data->id) }}" class="btn btn-primary btn-sm">Detail</a>
-                                <a href="{{ route('profil.edit', $data->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                            <td width='10%' class="text-center">
+                                <div class="">
+                                    <button class="btn btn-danger btn-sm dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu border-0 shadow">
+                                        <li>
+                                            <a href="{{ route('profil.show', $data->id) }}" class="dropdown-item">Detail</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('profil.edit', $data->id) }}" class="dropdown-item">Edit</a>
+                                        </li>
+                                        <li>
+                                            <!-- Tombol Delete -->
+                                            {!! Form::open([
+                                                'method' => 'DELETE',
+                                                'route' => ['profil.destroy', $data->id],
+                                                'style' => 'display.inline',
+                                            ]) !!}
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                            {!! Form::close() !!}
+                                            <!-- Tombol Delete -->
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                <!-- Tombol Delete -->
-                                {!! Form::open([
-                                    'method' => 'DELETE',
-                                    'route' => ['profil.destroy', $data->id],
-                                    'style' => 'display.inline',
-                                ]) !!}
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-                                {!! Form::close() !!}
-                                <!-- Tombol Delete -->
+
+
 
                             </td>
                         </tr>

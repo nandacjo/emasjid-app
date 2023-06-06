@@ -5,6 +5,8 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    'table_style' => 'table table-sm table-striped table-bordered',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
