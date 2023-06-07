@@ -2,11 +2,14 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
+
+use App\Repository\InformasiRepository;
+use App\Repository\Interfaces\InformasiRepositoryInterface;
 use App\Repository\Interfaces\KategoriRepositoryInterface;
 use App\Repository\Interfaces\ProfilRepositoryInterface;
 use App\Repository\KategoriRepository;
 use App\Repository\ProfilRepository;
-use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ProfilRepositoryInterface::class, ProfilRepository::class);
         $this->app->bind(KategoriRepositoryInterface::class, KategoriRepository::class);
+        $this->app->bind(InformasiRepositoryInterface::class, InformasiRepository::class);
     }
 
     /**

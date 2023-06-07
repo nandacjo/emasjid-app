@@ -69,10 +69,18 @@
                         </a>
                     </li>
 
-                    <!-- Kategri Informasi -->
+                    <!-- Kategori -->
                     <li class="sidebar-item {{ Route::is('kategori.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('kategori.index') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Kategori
+                                Masjid</span>
+                        </a>
+                    </li>
+
+                    <!-- Informasi -->
+                    <li class="sidebar-item {{ Route::is('informasi.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('informasi.index') }}">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Informasi
                                 Masjid</span>
                         </a>
                     </li>

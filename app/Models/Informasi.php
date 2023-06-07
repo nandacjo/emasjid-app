@@ -8,11 +8,10 @@ use App\Traits\HasMasjid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Informasi extends Model
 {
     use HasFactory;
-    use HasMasjid, HasCreatedBy;
-    use GenerateSlug;
+    use HasMasjid, HasCreatedBy, GenerateSlug;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 }

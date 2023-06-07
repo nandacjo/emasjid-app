@@ -18,7 +18,7 @@
             <div class="row align-items-center">
                 <div class="col-auto ">
                     <label></label>
-                    <a href="{{ route('profil.create') }}" class="d-block btn btn-primary">Tambah Data Kas</a>
+                    <a href="{{ route('informasi.create') }}" class="d-block btn btn-primary">Tambah Data </a>
                 </div>
             </div>
         </div>
@@ -27,8 +27,7 @@
                 <thead>
                     <tr>
                         <th width="3%">ID</th>
-                        <th>Judul</th>
-                        <th>Konten</th>
+                        <th>Informasi</th>
                         <th>Dibuat Oleh</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -37,8 +36,10 @@
                     @foreach ($models as $data)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->kategori ?? 'Umum' }}</td>
-                            <td>{{ strip_tags($data->konten) }}</td>
+                            <td>
+                                <div class="fw-bold">{{ $data->judul }}</div>
+                                <div>{{ strip_tags($data->konten) }}</div>
+                            </td>
                             <td>{{ $data->createdBy->name }}</td>
 
                             <td width='10%' class="text-center">
@@ -49,18 +50,18 @@
                                     </button>
                                     <ul class="dropdown-menu border-0 shadow">
                                         <li>
-                                            <a href="{{ route('profil.show', $data->slug) }}"
+                                            <a href="{{ route('informasi.show', $data->slug) }}"
                                                 class="dropdown-item">Detail</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('profil.edit', $data->slug) }}"
+                                            <a href="{{ route('informasi.edit', $data->slug) }}"
                                                 class="dropdown-item">Edit</a>
                                         </li>
                                         <li>
                                             <!-- Tombol Delete -->
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'route' => ['profil.destroy', $data->slug],
+                                                'route' => ['informasi.destroy', $data->slug],
                                                 'style' => 'display.inline',
                                             ]) !!}
                                             @csrf
@@ -72,10 +73,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
-
-
-
                             </td>
                         </tr>
                     @endforeach

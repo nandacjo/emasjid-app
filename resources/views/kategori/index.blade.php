@@ -50,13 +50,14 @@
                                     </button>
                                     <ul class="dropdown-menu border-0 shadow">
                                         <li>
-                                            <a href="{{ route('kategori.edit', $data->id) }}" class="dropdown-item">Edit</a>
+                                            <a href="{{ route('kategori.edit', $data->slug) }}"
+                                                class="dropdown-item">Edit</a>
                                         </li>
                                         <li>
                                             <!-- Tombol Delete -->
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'route' => ['kategori.destroy', $data->id],
+                                                'route' => ['kategori.destroy', $data->slug],
                                                 'style' => 'display.inline',
                                             ]) !!}
                                             @csrf
