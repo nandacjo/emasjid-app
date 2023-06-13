@@ -63,7 +63,7 @@
                     @foreach ($kas as $data)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->tanggal->translatedFormat('D, d-m-Y') }}</td>
+                            <td>{{ $data->tanggal->translatedFormat('l, d-m-Y') }}</td>
                             <td>{{ $data->createdBy->name }}</td>
                             <td>{{ $data->kategori ?? 'Umum' }}</td>
                             <td>{{ $data->keterangan }}</td>

@@ -6,9 +6,11 @@ use Illuminate\Support\ServiceProvider;
 use App\Repository\InformasiRepository;
 use App\Repository\Interfaces\InformasiRepositoryInterface;
 use App\Repository\Interfaces\KategoriRepositoryInterface;
+use App\Repository\Interfaces\KurbanRepositoryInterface;
 use App\Repository\Interfaces\MasjidBankRepositoryInterface;
 use App\Repository\Interfaces\ProfilRepositoryInterface;
 use App\Repository\KategoriRepository;
+use App\Repository\KurbanRepository;
 use App\Repository\MasjidBankRepository;
 use App\Repository\ProfilRepository;
 
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(KategoriRepositoryInterface::class, KategoriRepository::class);
         $this->app->bind(InformasiRepositoryInterface::class, InformasiRepository::class);
         $this->app->bind(MasjidBankRepositoryInterface::class, MasjidBankRepository::class);
+        $this->app->bind(KurbanRepositoryInterface::class, KurbanRepository::class);
     }
 
     /**

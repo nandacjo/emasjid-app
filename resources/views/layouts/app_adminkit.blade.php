@@ -92,6 +92,14 @@
                                 Data Bank</span>
                         </a>
                     </li>
+
+                    <!-- Data Kurban -->
+                    <li class="sidebar-item {{ Route::is('kurban.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('kurban.index') }}">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">
+                                Data Kurban</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
