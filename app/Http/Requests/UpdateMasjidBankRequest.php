@@ -11,7 +11,7 @@ class UpdateMasjidBankRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateMasjidBankRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'bank_id' => 'required|exists:banks,id',
+            'nama_rekening' => 'required',
+            'nomor_rekening' => 'required'
         ];
     }
 }

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('masjid_id')->index();
             $table->string('nama_bank');
-            $table->string('kode_bang');
+            $table->string('kode_bank');
             $table->string('nama_rekening');
             $table->string('nomor_rekening');
             $table->foreignId('created_by');
-            $table->$table->timestamps();
+            $table->timestamps();
         });
     }
 

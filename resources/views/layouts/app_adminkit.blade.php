@@ -84,6 +84,14 @@
                                 Masjid</span>
                         </a>
                     </li>
+
+                    <!-- Data bank -->
+                    <li class="sidebar-item {{ Route::is('masjid-bank.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('masjid-bank.index') }}">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">
+                                Data Bank</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -335,8 +343,14 @@
     <!-- include summernote css/js-->
     <link href="{{ asset('summernote/sm/summernote-bs4.css') }}" rel="stylesheet">
     <script src="{{ asset('summernote/sm/summernote-bs4.js') }}"></script>
+    <link href="{{ asset('select2/css/select2.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('select2/js/select2.min.js') }}"></script>
+
     <script type="module">
     $(document).ready(function() {
+
+        // select2
+        $('.select2').select2();
 
       // summer note
       $('#summernote').summernote({

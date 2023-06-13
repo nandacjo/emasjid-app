@@ -56,7 +56,7 @@
                         <th>Keterangan</th>
                         <th class="text-end">Pemasukan</th>
                         <th class="text-end">Pengeluaran</th>
-                        <th>Actions</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,9 +78,11 @@
                                     class="badge bg-danger">{{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah, true) : '-' }}</span>
                             </td>
                             {{-- <td>{{ formatRupiah($data->masjid->saldo_akhir, true) }}</td> --}}
-                            <td class="d-flex gap-2">
-                                <a href="{{ route('kas.show', $data->id) }}" class="btn btn-primary btn-sm">Detail</a>
-                                <a href="{{ route('kas.edit', $data->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                            <td class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('kas.show', $data->id) }}"
+                                    class="btn rounded btn-primary btn-sm">Detail</a>
+                                <a href="{{ route('kas.edit', $data->id) }}"
+                                    class="btn rounded btn-secondary btn-sm">Edit</a>
 
                                 <!-- Tombol Delete -->
                                 {!! Form::open([
@@ -90,7 +92,7 @@
                                 ]) !!}
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
+                                <button type="submit" class="btn rounded btn-danger btn-sm"
                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
                                 {!! Form::close() !!}
                                 <!-- Tombol Delete -->
