@@ -7,6 +7,7 @@ use App\Traits\HasCreatedBy;
 use App\Traits\HasMasjid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kurban extends Model
 {
@@ -19,6 +20,16 @@ class Kurban extends Model
     protected $casts = [
         'tanggal_akhir_pendaftaran' => 'date'
     ];
+
+    /**
+     * Get all of the hewankurban for the Kurban
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function hewankurban(): HasMany
+    {
+        return $this->hasMany(KurbanHewan::class);
+    }
 
     public function resolveRouteBinding($value, $field = null)
     {

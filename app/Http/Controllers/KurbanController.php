@@ -51,7 +51,9 @@ class KurbanController extends Controller
      */
     public function show(Model $kurban)
     {
-        //
+        $model = $kurban;
+        $title = 'Detail kurban';
+        return view('kurban.show', compact('model', 'title'));
     }
 
     /**
