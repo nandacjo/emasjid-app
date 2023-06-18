@@ -16,8 +16,8 @@
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
     <title>E-Masjid | {{ $title ?? '' }}</title>
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-
+    {{-- <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet"> --}}
+    @vite('resources/sass/app.scss')
     <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 

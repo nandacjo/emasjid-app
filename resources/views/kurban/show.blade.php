@@ -26,12 +26,76 @@
             </p>
             <hr>
             <h4>Data Hewan Kurban</h4>
+
+            @if ($model->hewankurban->count() >= 1)
+                <div class="text-start">
+                    <a href="{{ route('kurban-hewan.create', ['kurban_id' => $model->id]) }} "
+                        class="btn btn-sm btn-primary mb-2">Buat
+                        Baru</a>
+                </div>
+            @endif
+
             @if ($model->hewankurban->count() == 0)
                 <div class="text-center">
                     Belum ada data. <a href="{{ route('kurban-hewan.create', ['kurban_id' => $model->id]) }} ">Buat
                         Baru</a>
                 </div>
             @else
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="1%">NO</th>
+                                <th>HEWAN</th>
+                                <th>IURAN</th>
+                                <th>HARGA</th>
+                                <th>BIAYA OPS</th>
+                                <th>CRETED BY</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($model->hewanKurban as $data)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data->hewan }} ({{ $data->kriteria }})</td>
+                                    <td>{{ formatRupiah($data->iuran_perorang, true) }}</td>
+                                    <td>{{ formatRupiah($data->harga, true) }}</td>
+                                    <td>{{ formatRupiah($data->biaya_operasional, true) }}</td>
+                                    <td>{{ $data->createdBy->nama }}</td>
+                                    <td width='10%' class="text-center">
+                                        <div class="">
+                                            <button class="btn btn-danger btn-sm dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <ul class="dropdown-menu border-0 shadow">
+                                                <li>
+                                                    <a href="{{ route('kurban-hewan.edit', [$data->id, 'kurban_id' => $data->kurban_id]) }}"
+                                                        class="dropdown-item">Edit</a>
+                                                </li>
+                                                <li>
+                                                    <!-- Tombol Delete -->
+                                                    {!! Form::open([
+                                                        'method' => 'DELETE',
+                                                        'route' => ['kurban-hewan.destroy', [$data->id, 'kurban_id' => $data->kurban_id]],
+                                                        'style' => 'display.inline',
+                                                    ]) !!}
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                                    {!! Form::close() !!}
+                                                    <!-- Tombol Delete -->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             @endif
 
         </div>

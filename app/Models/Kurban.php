@@ -26,7 +26,7 @@ class Kurban extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function hewankurban(): HasMany
+    public function hewanKurban(): HasMany
     {
         return $this->hasMany(KurbanHewan::class);
     }

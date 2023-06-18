@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class KurbanHewan extends Model
 {
     use HasFactory;
-    use HasMasjid, HasCreatedBy;
+    use HasMasjid, HasCreatedBy, HasCreatedBy;
 
     protected $guarded = [];
 
@@ -23,5 +23,12 @@ class KurbanHewan extends Model
     public function kurban(): BelongsTo
     {
         return $this->belongsTo(Kurban::class);
+    }
+
+    // mencek dua kondisi di model binding slug dan masjid_id
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('masjid_id', auth()->user()->masjid_id)
+            ->where('id', $value)->firstOrFail();
     }
 }
