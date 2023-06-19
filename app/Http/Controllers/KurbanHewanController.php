@@ -35,7 +35,11 @@ class KurbanHewanController extends Controller
         $kurban = Kurban::userMasjid()->where('id', request('kurban_id'))->firstOrFail();
         $title = 'Tambah informasi hewan kurban';
 
-        return view('kurbanhewan.form', compact('model', 'title', 'kurban'));
+        return view('kurbanhewan.form', compact([
+            'model',
+            'title',
+            'kurban',
+        ]));
     }
 
     /**

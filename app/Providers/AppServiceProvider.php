@@ -7,11 +7,15 @@ use App\Repository\InformasiRepository;
 use App\Repository\Interfaces\InformasiRepositoryInterface;
 use App\Repository\Interfaces\KategoriRepositoryInterface;
 use App\Repository\Interfaces\KurbanHewanRepositoryInterface;
+use App\Repository\Interfaces\KurbanPesertaRepositoryInterface;
+use App\Repository\Interfaces\PesertaRepositoryInterface;
 use App\Repository\Interfaces\KurbanRepositoryInterface;
 use App\Repository\Interfaces\MasjidBankRepositoryInterface;
 use App\Repository\Interfaces\ProfilRepositoryInterface;
 use App\Repository\KategoriRepository;
 use App\Repository\KurbanHewanRepository;
+use App\Repository\PesertaRepository;
+use App\Repository\KurbanPesertaRepository;
 use App\Repository\KurbanRepository;
 use App\Repository\MasjidBankRepository;
 use App\Repository\ProfilRepository;
@@ -29,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MasjidBankRepositoryInterface::class, MasjidBankRepository::class);
         $this->app->bind(KurbanRepositoryInterface::class, KurbanRepository::class);
         $this->app->bind(KurbanHewanRepositoryInterface::class, KurbanHewanRepository::class);
+        $this->app->bind(KurbanPesertaRepositoryInterface::class, KurbanPesertaRepository::class);
+        $this->app->bind(PesertaRepositoryInterface::class, PesertaRepository::class);
     }
 
     /**

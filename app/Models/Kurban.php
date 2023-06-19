@@ -31,6 +31,11 @@ class Kurban extends Model
         return $this->hasMany(KurbanHewan::class);
     }
 
+    public function kurbanPeserta(): HasMany
+    {
+        return $this->hasMany(KurbanPeserta::class);
+    }
+
     public function resolveRouteBinding($value, $field = null)
     {
         return $this->where('masjid_id', auth()->user()->masjid_id)

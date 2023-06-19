@@ -45,6 +45,7 @@
                         <span class="text-danger">{{ $errors->first('konten') }}</span>
                     </div>
 
+
                     <!-- Button  -->
                     {!! Form::submit(isset($model->id) ? 'Update' : 'Simpan', ['class' => 'btn btn-success mb-3']) !!}
 
