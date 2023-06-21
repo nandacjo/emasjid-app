@@ -1,5 +1,20 @@
 @extends('layouts.app_adminkit')
 
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('.pembayaran').hide();
+            $('#my-input').change(function() {
+                if ($(this).is(':checked')) {
+                    $('.pembayaran').slideDown();
+                } else {
+                    $('.pembayaran').slideUp();
+                }
+            });
+        });
+    </script>
+@endsection
+
 @section('content')
     <h1 class="h3 mb-3 text-uppercase">{{ isset($model->id) ? "$title" : "$title" }}
         {{ auth()->user()->masjid->nama }}</h1>
@@ -8,8 +23,8 @@
             <div class="card">
                 <div class="card-body">
 
-                    <div class="badge bg-danger mb-2">
-                        Warning: Tanda * waji diisi
+                    <div class="alert alert-info" role="alert">
+                        <strong>Warning: </strong> Tanda * Wajib Diisi
                     </div>
 
                     {!! Form::model($model, [
@@ -20,7 +35,7 @@
                     <!-- Nama Peserta Kurban -->
                     <div class="form-group mb-3">
                         {!! Form::label('nama', 'Nama Lengkap Peserta') !!}
-                        {!! Form::text('nama', null, ['class' => 'form-control', 'autofocus']) !!}
+                        {!! Form::text('nama', null, ['class' => 'form-control', 'autofocus', 'placeholder' => 'Nama lengkap']) !!}
                         <span class="text-danger">{{ $errors->first('nama') }}</span>
                     </div>
 
@@ -66,18 +81,24 @@
                         <span class="text-danger">{{ $errors->first('status_bayar') }}</span>
                     </div>
 
-                    <!-- Total Bayar -->
-                    <div class="form-group mb-3">
-                        {!! Form::label('total_bayar', 'Total Bayar') !!}
-                        {!! Form::text('total_bayar', null, ['class' => 'form-control rupiah']) !!}
-                        <span class="text-danger">{{ $errors->first('total_bayar') }}</span>
-                    </div>
+                    <div class="pembayaran" id="pembayaran">
+                        <div class="alert alert-info" role="alert">
+                            <strong>Jika Total Bayar Kosong,</strong> Maka Otomatis Dari Iuran Perorang
+                        </div>
 
-                    <!-- Tanggal Bayar -->
-                    <div class="form-group mb-3">
-                        {!! Form::label('tanggal_bayar', 'Tanggal Bayar') !!}
-                        {!! Form::text('tanggal_bayar', $model->tanggal_bayar ?? now(), ['class' => 'form-control']) !!}
-                        <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
+                        <!-- Total Bayar -->
+                        <div class="form-group mb-3">
+                            {!! Form::label('total_bayar', 'Total Bayar') !!}
+                            {!! Form::text('total_bayar', null, ['class' => 'form-control rupiah']) !!}
+                            <span class="text-danger">{{ $errors->first('total_bayar') }}</span>
+                        </div>
+
+                        <!-- Tanggal Bayar -->
+                        <div class="form-group mb-3">
+                            {!! Form::label('tanggal_bayar', 'Tanggal Bayar') !!}
+                            {!! Form::text('tanggal_bayar', $model->tanggal_bayar ?? now(), ['class' => 'form-control']) !!}
+                            <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
+                        </div>
                     </div>
 
                     <!-- Button  -->

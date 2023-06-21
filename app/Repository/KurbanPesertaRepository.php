@@ -2,61 +2,68 @@
 
 namespace App\Repository;
 
+use App\Http\Requests\StoreKurbanPesertaRequest;
+use App\Http\Requests\StorePesertaRequest;
 use App\Models\KurbanHewan;
 use App\Models\KurbanPeserta as Model;
 use App\Models\Peserta;
 use App\Repository\Interfaces\KurbanPesertaRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class KurbanPesertaRepository implements KurbanPesertaRepositoryInterface
 {
-    public function allData()
-    {
-        return Model::UserMasjid()->latest()->paginate(50);
+  public function allData()
+  {
+    return Model::UserMasjid()->latest()->paginate(50);
+  }
+
+
+  public function storeData($request): void
+  {
+    $requestPeserta = $request[1]->validated();
+
+    DB::beginTransaction();
+    $peserta = Peserta::create($requestPeserta);
+    $statusBayar = 'belum';
+    if ($request[0]->filled('status_bayar')) {
+      $statusBayar = 'lunas';
     }
+    $requestKurbanPeserta = $request[0]->validated();
+    $kurbanHewan = KurbanHewan::userMasjid()->where("id", $request[0]->kurban_hewan_id)->firstOrFail();
+    $requestKurbanPeserta['total_bayar'] = $requestKurbanPeserta['total_bayar'] ?? $kurbanHewan->iuran_perorang;
+    $dataKurbanPeserta = [
+      'kurban_id' => $kurbanHewan->kurban_id,
+      'kurban_hewan_id' => $kurbanHewan->id,
+      'peserta_id' => $peserta->id,
+      'total_bayar' => $requestKurbanPeserta['total_bayar'],
+      'tanggal_bayar' => $requestKurbanPeserta['tanggal_bayar'],
+      'status_bayar' => strtolower($statusBayar),
+      'metode_bayar' => 'Tunai',
+      'bukti_bayar' => 'Ok'
+    ];
+    Model::create($dataKurbanPeserta);
+    DB::commit();
+  }
 
-    public function storeData($request): void
-    {
-        $requestData = $request->validated();
-        $requestDataPeserta = $requestData;
+  public function findData($data)
+  {
+    return $data;
+  }
 
-        unset($requestDataPeserta['kurban_hewan_id']);
-        unset($requestDataPeserta['status_bayar']);
-        unset($requestDataPeserta['total_bayar']);
-        unset($requestDataPeserta['tanggal_bayar']);
-        unset($requestDataPeserta['kurban_id']);
+  public function updateData($request, $kurban)
+  {
+    $requestData = $request->validated();
+    $kurban->update($requestData);
+  }
 
-        DB::beginTransaction();
-        $peserta = Peserta::create($requestDataPeserta);
-        if ($request->filled('status_bayar')) {
-            $kurbanHewan = KurbanHewan::userMasjid()->where("id", $request->kurban_hewan_id)->firstOrFail();
-            $dataKurbanPeserta = [
-                'kurban_id' => $kurbanHewan->id,
-                'kurban_hewan_id' => $kurbanHewan->id,
-                'peserta_id' => $peserta->id,
-                'total_bayar' => $requestData['total_bayar'],
-                'tanggal_bayar' => $requestData['tanggal_bayar'],
-                'status_bayar' => 'Lunas', 'metode_bayar' => 'Tunai',
-                'bukti_bayar' => 'Ok'
-            ];
-            Model::create($dataKurbanPeserta);
-        }
-        DB::commit();
+  public function destroyData($data)
+  {
+    if ($data->status_bayar == 'Lunas') {
+      return false;
+    } else {
+      $data->delete();
+      return true;
     }
-
-    public function findData($data)
-    {
-        return $data;
-    }
-
-    public function updateData($request, $kurban)
-    {
-        $requestData = $request->validated();
-        $kurban->update($requestData);
-    }
-
-    public function destroyData($data)
-    {
-        $data->delete();
-    }
+  }
 }

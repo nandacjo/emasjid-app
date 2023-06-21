@@ -11,7 +11,7 @@ class StorePesertaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePesertaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama' => 'required',
+            'nama_tampilan' => 'required',
+            'nohp' => 'required',
+            'alamat' => 'nullable',
         ];
     }
 }

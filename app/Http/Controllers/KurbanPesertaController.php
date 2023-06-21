@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKurbanPesertaRequest;
+use App\Http\Requests\StorePesertaRequest;
 use App\Http\Requests\UpdateKurbanRequest;
 use App\Models\KurbanPeserta as Model;
 use App\Models\Kurban;
@@ -45,9 +46,9 @@ class KurbanPesertaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreKurbanPesertaRequest $request)
+    public function store(StoreKurbanPesertaRequest $requestKurbanPeserta, StorePesertaRequest $requestPeserta)
     {
-        $this->kurbanPesertaRepository->storeData($request);
+        $this->kurbanPesertaRepository->storeData([$requestKurbanPeserta, $requestPeserta]);
         flash('Data berhasil disimpan');
         return back();
     }
@@ -85,10 +86,14 @@ class KurbanPesertaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Model $kurban)
+    public function destroy(Model $kurban_pesertum)
     {
-        $this->kurbanPesertaRepository->destroyData($kurban);
-        flash('Data sudah dihapus');
-        return back();
+        if ($this->kurbanPesertaRepository->destroyData($kurban_pesertum)) {
+            flash('Data sudah dihapus');
+            return back();
+        } else {
+            flash('Data tidak dapat dihapus karena sudah lunas')->warning();
+            return back();
+        }
     }
 }
