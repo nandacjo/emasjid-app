@@ -14,7 +14,11 @@
 
   <div class="card">
     <div class="card-body">
-      <h3 class="fw-bold">Tahun Kurban: {{ $model->tahun_hijriah . '/' . $model->tahun_masehi }}</h3>
+      <div class="d-flex justify-content-between">
+        <h3 class="fw-bold">Tahun Kurban: {{ $model->tahun_hijriah . '/' . $model->tahun_masehi }}</h3>
+        <a href="{{ route('kurban.show', [$model->id, 'output' => 'laporan']) }}"><i class="align-middle"
+            data-feather="file-text"></i> Laportan Peserta Kurban</a>
+      </div>
       <h6><i class="align-middle" data-feather="calendar"></i> Tanggal Akhir Pendaftaran:
         <b>{{ $model->tanggal_akhir_pendaftaran->translatedFormat('l, d-m-Y') }}</b>
       </h6>

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreKurbanRequest;
 use App\Http\Requests\UpdateKurbanRequest;
 use App\Models\Kurban as Model;
 use App\Repository\Interfaces\KurbanRepositoryInterface;
+use Illuminate\Http\Request;
 
 class KurbanController extends Controller
 {
@@ -49,10 +50,14 @@ class KurbanController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(Model $kurban)
+  public function show(Request $request, Model $kurban)
   {
     $model = $kurban;
     $title = 'Detail kurban';
+    if ($request->output == 'laporan') {
+      $title = 'Laporan kurban';
+      return view('kurban.laporan', compact('model', 'title'));
+    }
     return view('kurban.show', compact('model', 'title'));
   }
 
