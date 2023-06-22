@@ -30,7 +30,7 @@
       <!-- Daftar hewan kurban -->
       <h4>Data Hewan Kurban</h4>
 
-      @if ($model->hewanKurban->count() >= 1)
+      @if ($model->kurbanHewan->count() >= 1)
         <div class="text-start">
           <a href="{{ route('kurban-hewan.create', ['kurban_id' => $model->id]) }} "
             class="btn btn-sm btn-primary mb-2">Buat
@@ -38,7 +38,7 @@
         </div>
       @endif
 
-      @if ($model->hewanKurban->count() == 0)
+      @if ($model->kurbanHewan->count() == 0)
         <div class="text-center">
           Belum ada data. <a href="{{ route('kurban-hewan.create', ['kurban_id' => $model->id]) }} ">Buat
             Baru</a>
@@ -58,7 +58,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($model->hewanKurban as $data)
+              @foreach ($model->kurbanHewan as $data)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $data->hewan }} ({{ $data->kriteria }})</td>

@@ -11,44 +11,44 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kurban extends Model
 {
-    use HasFactory;
-    use HasMasjid, HasCreatedBy, ConvertContentImageBase64ToUrl;
+  use HasFactory;
+  use HasMasjid, HasCreatedBy, ConvertContentImageBase64ToUrl;
 
-    protected $contentName = 'konten';
-    protected $guarded = ['id'];
+  protected $contentName = 'konten';
+  protected $guarded = ['id'];
 
-    protected $casts = [
-        'tanggal_akhir_pendaftaran' => 'date'
-    ];
+  protected $casts = [
+    'tanggal_akhir_pendaftaran' => 'date'
+  ];
 
-    /**
-     * Get all of the hewankurban for the Kurban
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function hewanKurban(): HasMany
-    {
-        return $this->hasMany(KurbanHewan::class);
-    }
+  /**
+   * Get all of the hewankurban for the Kurban
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function kurbanHewan(): HasMany
+  {
+    return $this->hasMany(KurbanHewan::class);
+  }
 
-    public function kurbanPeserta(): HasMany
-    {
-        return $this->hasMany(KurbanPeserta::class);
-    }
+  public function kurbanPeserta(): HasMany
+  {
+    return $this->hasMany(KurbanPeserta::class);
+  }
 
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->where('masjid_id', auth()->user()->masjid_id)
-            ->where('id', $value)->firstOrFail();
-    }
+  public function resolveRouteBinding($value, $field = null)
+  {
+    return $this->where('masjid_id', auth()->user()->masjid_id)
+      ->where('id', $value)->firstOrFail();
+  }
 
-    // protected $dates = [
-    //     'tanggal_akhir_pendaftaran',
-    // ];
+  // protected $dates = [
+  //     'tanggal_akhir_pendaftaran',
+  // ];
 
 
-    // protected function serializeDate(\DateTimeInterface $date)
-    // {
-    //     return $date->format('Y-m-d');
-    // }
+  // protected function serializeDate(\DateTimeInterface $date)
+  // {
+  //     return $date->format('Y-m-d');
+  // }
 }

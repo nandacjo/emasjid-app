@@ -35,7 +35,7 @@ class KurbanPesertaController extends Controller
   {
     $model = new Model();
     $kurban = Kurban::userMasjid()->where('id', request('kurban_id'))->firstOrFail();
-    $listHewanKurban = $kurban->hewanKurban->pluck('nama_full', 'id');
+    $listHewanKurban = $kurban->kurbanHewan->pluck('nama_full', 'id');
     $title = 'Tambah informasi peserta kurban';
 
     return view('kurbanpeserta.form', compact([
@@ -71,7 +71,7 @@ class KurbanPesertaController extends Controller
   {
     $model = $kurban_pesertum;
     $kurban = Kurban::userMasjid()->where('id', request('kurban_id'))->firstOrFail();
-    $listHewanKurban = $kurban->hewanKurban->pluck('nama_full', 'id');
+    $listHewanKurban = $kurban->kurbanHewan->pluck('nama_full', 'id');
     $title = 'Pembayaran kurban';
 
     return view('kurbanpeserta.form-edit', compact([
