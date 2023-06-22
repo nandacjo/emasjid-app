@@ -54,7 +54,14 @@ class KurbanPesertaRepository implements KurbanPesertaRepositoryInterface
   public function updateData($request, $kurban)
   {
     $requestData = $request->validated();
+    $iuranPerorang = $kurban->kurbanHewan->iuran_perorang;
+    $totalBayar = $requestData['total_bayar'];
+    if ($iuranPerorang > $totalBayar) {
+      return false;
+    }
+    $kurban->status_bayar = 'lunas';
     $kurban->update($requestData);
+    return true;
   }
 
   public function destroyData($data)

@@ -24,6 +24,15 @@ class KurbanPeserta extends Model
     return $this->belongsTo(KurbanHewan::class);
   }
 
+  public function getStatusTeks()
+  {
+    if ($this->status_bayar == 'lunas') {
+      return 'Sudah Lunas';
+    } else {
+      return 'Belum Lunas';
+    }
+  }
+
   // mencek dua kondisi di model binding slug dan masjid_id
   public function resolveRouteBinding($value, $field = null)
   {

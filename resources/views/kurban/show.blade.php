@@ -65,7 +65,7 @@
                   <td>{{ formatRupiah($data->iuran_perorang, true) }}</td>
                   <td>{{ formatRupiah($data->harga, true) }}</td>
                   <td>{{ formatRupiah($data->biaya_operasional, true) }}</td>
-                  <td>{{ $data->createdBy->nama }}</td>
+                  <td>{{ $data->createdBy->name }}</td>
                   <td width='10%' class="text-center">
                     <div class="">
                       <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -118,7 +118,7 @@
       @if ($model->kurbanPeserta->count() == 0)
         <div class="text-center">
           Belum ada data peserta. <a href="{{ route('kurban-peserta.create', ['kurban_id' => $model->id]) }} ">Buat
-            Baru</a>
+            Pendaftaran Baru</a>
         </div>
       @else
         <div class="table-responsive">
@@ -131,7 +131,7 @@
                 <th>ALAMAT</th>
                 <th>JENIS HEWAN</th>
                 <th class="text-center" width="13%">STATUS PEMBAYARAN</th>
-                <th>AKSI</th>
+                <th class="text-center" colspan="2">AKSI</th>
               </tr>
             </thead>
             <tbody>
@@ -151,37 +151,33 @@
                   </td>
                   <td class="text-center">
                     <span class="badge bg-{{ $data->status_bayar == 'lunas' ? 'success' : 'warning' }}">
-                      {{ $data->status_bayar == 'lunas' ? 'Lunas' : 'Belum Lunas' }}
+                      {{ $data->getStatusTeks() }}
                     </span>
                   </td>
-                  <td width='10%' class="text-center">
-                    <div class="">
-                      <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Action
-                      </button>
-                      <ul class="dropdown-menu border-0 shadow">
-                        <li>
-                          <a href="{{ route('kurban-peserta.edit', [$data->id, 'kurban_id' => $data->kurban_id]) }}"
-                            class="dropdown-item">Edit</a>
-                        </li>
-                        <li>
-                          <!-- Tombol Delete -->
-                          {!! Form::open([
-                              'method' => 'DELETE',
-                              'route' => ['kurban-peserta.destroy', [$data->id, 'kurban_id' => $data->kurban_id]],
-                              'style' => 'display.inline',
-                          ]) !!}
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="dropdown-item"
-                            onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-                          {!! Form::close() !!}
-                          <!-- Tombol Delete -->
-                        </li>
-                      </ul>
-                    </div>
+                  <td class="text-center">
+                    @if ($data->status_bayar == 'belum')
+                      <a class="btn btn-sm btn-primary"
+                        href="{{ route('kurban-peserta.edit', [$data->id, 'kurban_id' => $data->kurban_id]) }}"
+                        class="dropdown-item">Pembayaran</a>
+                    @else
+                      {{ $data->getStatusTeks() }}
+                    @endif
                   </td>
+                  <td class="text-center">
+
+                    <!-- Tombol Delete -->
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'route' => ['kurban-peserta.destroy', [$data->id, 'kurban_id' => $data->kurban_id]],
+                    ]) !!}
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger mx-2"
+                      onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                    {!! Form::close() !!}
+                    <!-- Tombol Delete -->
+                  </td>
+
                 </tr>
               @endforeach
             </tbody>
