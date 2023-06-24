@@ -18,13 +18,12 @@
   <div class="text-end">
     <h3 class="fw-bold">Tahun Kurban: {{ $model->tahun_hijriah . '/' . $model->tahun_masehi }}</h3>
   </div>
-  <h6><i class="align-middle" data-feather="calendar"></i> Tanggal Akhir Pendaftaran:
-    <b>{{ $model->tanggal_akhir_pendaftaran->translatedFormat('l, d-m-Y') }}</b>
+  <b>{{ $model->tanggal_akhir_pendaftaran->translatedFormat('l, d-m-Y') }}</b>
   </h6>
-  <h6 class="text-muted text-sm"><i class="align-middle" data-feather="user"></i> Created By:
+  <p class="text-muted text-sm"> Created By:
     <b>{{ $model->createdBy->name }}, {{ $model->created_at->diffForHumans() }}</b>
-  </h6>
-  <p class="mt-2">
+  </p>
+  <p class="mt-1">
     {!! $model->konten !!}
   </p>
 
@@ -95,9 +94,7 @@
               {{ $data->kurbanHewan->iuran_perorang }}
             </td>
             <td class="text-center">
-              <span class="badge bg-{{ $data->status_bayar == 'lunas' ? 'success' : 'warning' }}">
-                {{ $data->getStatusTeks() }}
-              </span>
+              {{ $data->getStatusTeks() }}
             </td>
           </tr>
         @endforeach

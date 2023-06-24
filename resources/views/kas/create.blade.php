@@ -7,7 +7,6 @@
       <div class="card">
         <div class="card-body">
 
-
           {{-- {!! Form::model($kas, ['route' => ['kas.update', $kas->id], 'method' => 'PUT']) !!} --}}
           <h4>Saldo Akhir Saat Ini : <span class="bg-warning p-1 rounded-2">
               {{ formatRupiah($saldoAkhir, true) }}</span>
@@ -17,8 +16,6 @@
               'route' => isset($kas->id) ? ['kas.update', $kas->id] : 'kas.store',
               'method' => isset($kas->id) ? 'PUT' : 'POST',
           ]) !!}
-
-
 
           <div class="form-group mb-3">
             {!! Form::label('tanggal', 'Tanggal') !!}

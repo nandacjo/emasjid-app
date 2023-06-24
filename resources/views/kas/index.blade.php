@@ -1,5 +1,20 @@
 @extends('layouts.app_adminkit')
 
+@section('js')
+  <script>
+    $(document).ready(function() {
+      $('#cetak').click(function(e) {
+        var tanggalMulai = $('#tanggal_mulai').val();
+        var tanggalSelesai = $('#tanggal_selesai').val();
+        var q = $('#q').val();
+        var params = "?page=laporan&tanggal_mulai=" + tanggalMulai + "&tanggal_selesai=" + tanggalSelesai +
+          "&q=" + q;
+        window.open('/kas' + params, 'blank')
+      })
+    });
+  </script>
+@endsection
+
 @section('content')
   <div class="row">
     <div class="col text-center fw-bold text-uppercase">
@@ -30,13 +45,15 @@
         <label for="tanggal_transaksi">Tanggal Mulai</label>
         {!! Form::date('tanggal_mulai', request('tanggal_mulai'), [
             'class' => 'form-control',
+            'id' => 'tanggal_mulai',
         ]) !!}
       </div>
 
       <div class="mx-3">
-        <label for="tanggal_transaksi">Tanggal Transaksi</label>
+        <label for="tanggal_selesai">Tanggal Selesai</label>
         {!! Form::date('tanggal_selesai', request('tanggal_selesai'), [
             'class' => 'form-control',
+            'id' => 'tanggal_selesai',
         ]) !!}
       </div>
 
@@ -48,7 +65,10 @@
               'placeholder' => 'Keterangan Transaksi',
               'id' => 'q',
           ]) !!}
-          <button class="btn btn-primary" type="submit" id="button-addon2">Cari</button>
+          <button class="btn btn-primary fw-bold" type="submit" id="button-addon2">CARI</button>
+          <button id="cetak" class="btn btn-primary fw-bold d-flex align-items-center "target="blank"
+            type="button"><i class="align-middle me-2" data-feather="printer"></i> CETAK
+            LAPORAN</button>
         </div>
       </div>
       {!! Form::close() !!}
