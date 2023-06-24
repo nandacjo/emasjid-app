@@ -20,6 +20,7 @@
             <th>Keterangan</th>
             <th class="text-end">Pemasukan</th>
             <th class="text-end">Pengeluaran</th>
+            <th class="text-end">Saldo</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,7 @@
               <td class="text-end">
                 {{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah, true) : '-' }}
               </td>
+              <td class="text-end">{{ formatRupiah($data->saldo, true) }}</td>
             </tr>
           @endforeach
         </tbody>

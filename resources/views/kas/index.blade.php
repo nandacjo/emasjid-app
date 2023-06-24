@@ -22,10 +22,6 @@
       <hr>
     </div>
   </div>
-  {{-- <div class="col-md-6">
-    <h2 class="h3">Data Kas {{ auth()->user()->masjid->nama }}</h2>
-  </div> --}}
-
   @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
   @endif
@@ -83,6 +79,7 @@
             <th>Keterangan</th>
             <th class="text-end">Pemasukan</th>
             <th class="text-end">Pengeluaran</th>
+            <th class="text-end">Saldo</th>
             <th class="text-center">Actions</th>
           </tr>
         </thead>
@@ -103,7 +100,8 @@
                 <span
                   class="badge bg-danger">{{ $data->jenis == 'keluar' ? formatRupiah($data->jumlah, true) : '-' }}</span>
               </td>
-              {{-- <td>{{ formatRupiah($data->masjid->saldo_akhir, true) }}</td> --}}
+
+              <td class="text-end">{{ formatRupiah($data->saldo, true) }}</td>
               <td class="d-flex justify-content-center gap-2">
                 <a href="{{ route('kas.show', $data->id) }}" class="btn rounded btn-primary btn-sm">Detail</a>
                 <a href="{{ route('kas.edit', $data->id) }}" class="btn rounded btn-secondary btn-sm">Edit</a>
@@ -120,17 +118,16 @@
                   onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
                 {!! Form::close() !!}
                 <!-- Tombol Delete -->
-
               </td>
             </tr>
           @endforeach
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="5" class="text-center fw-bold">Total</td>
+            <td colspan="4" class="text-center fw-bold">Total</td>
             <td class="text-end">{{ formatRupiah($totalPemasukan, true) }}</td>
             <td class="text-end">{{ formatRupiah($totalPengeluaran, true) }}</td>
-            <td></td>
+            <td class="text-end">{{ formatRupiah($saldoAkhir, true) }}</td>
           </tr>
         </tfoot>
       </table>
