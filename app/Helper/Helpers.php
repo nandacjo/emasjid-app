@@ -2,8 +2,16 @@
 
 function formatRupiah($nominal, $prefix = false)
 {
-    if ($prefix) {
-        return "Rp. " . number_format($nominal, 0, ',', '.');
-    }
-    return number_format($nominal, 0, ",", ".");
+  if ($prefix) {
+    return "Rp. " . number_format($nominal, 0, ',', '.');
+  }
+  return number_format($nominal, 0, ",", ".");
+}
+
+
+if (!function_exists('satuan')) {
+  function satuan($jumlah, $satuan, $jenis)
+  {
+    return $jenis == 'uang' ? formatRupiah($jumlah, true) : $jumlah . ' ' . $satuan;
+  }
 }

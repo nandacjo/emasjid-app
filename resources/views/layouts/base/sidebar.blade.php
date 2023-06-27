@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
   <div class="sidebar-content js-simplebar">
     <a class="sidebar-brand" href="index.html">
-      <span class="align-middle">AdminKit</span>
+      <span class="align-middle">E-Masjid App</span>
     </a>
 
     <ul class="sidebar-nav">
@@ -16,10 +16,22 @@
         </a>
       </li>
 
+      <li class="sidebar-header">
+        Masjid Management
+      </li>
+
       <!-- Data Masjid -->
       <li class="sidebar-item {{ Route::is('masjid.*') ? 'active' : '' }}">
         <a class="sidebar-link" href="{{ route('masjid.create') }}">
           <i class="align-middle" data-feather="user"></i> <span class="align-middle">Mesjid</span>
+        </a>
+      </li>
+
+      <!-- Infaq Masjid -->
+      <li class="sidebar-item {{ Route::is('infaq.*') ? 'active' : '' }}">
+        <a class="sidebar-link" href="{{ route('infaq.index') }}">
+          <i class="align-middle" data-feather="user"></i> <span class="align-middle">Data Infaq
+            Mesjid</span>
         </a>
       </li>
 
@@ -45,6 +57,10 @@
           <i class="align-middle" data-feather="user"></i> <span class="align-middle">Kategori
             Masjid</span>
         </a>
+      </li>
+
+      <li class="sidebar-header">
+        Informasi
       </li>
 
       <!-- Informasi -->

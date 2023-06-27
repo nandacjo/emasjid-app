@@ -49,10 +49,10 @@
         </div>
       @else
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-sm table-bordered">
             <thead>
               <tr>
-                <th width="1%">NO</th>
+                <th class="text-center" width="1%">NO</th>
                 <th>HEWAN</th>
                 <th>IURAN</th>
                 <th>HARGA</th>
@@ -64,7 +64,7 @@
             <tbody>
               @foreach ($model->kurbanHewan as $data)
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td class="text-center">{{ $loop->iteration }}</td>
                   <td>{{ $data->hewan }} ({{ $data->kriteria }})</td>
                   <td>{{ formatRupiah($data->iuran_perorang, true) }}</td>
                   <td>{{ formatRupiah($data->harga, true) }}</td>
@@ -126,10 +126,10 @@
         </div>
       @else
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-sm table-bordered">
             <thead>
               <tr>
-                <th width="1%">NO</th>
+                <th width="1%" class="text-center">NO</th>
                 <th>NAMA</th>
                 <th>NO. HP</th>
                 <th>ALAMAT</th>
@@ -141,10 +141,10 @@
             <tbody>
               @foreach ($model->kurbanPeserta as $data)
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td class="text-center">{{ $loop->iteration }}</td>
                   <td>
                     <div>{{ $data->peserta->nama }}</div>
-                    <div>({{ $data->peserta->nama }})</div>
+                    {{-- <div>({{ $data->peserta->nama }})</div> --}}
                   </td>
                   <td>{{ $data->peserta->nohp }}</td>
                   <td>{{ $data->peserta->alamat }}</td>

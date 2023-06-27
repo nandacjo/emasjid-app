@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InfaqController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\KategoriController;
@@ -29,30 +30,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('logout-user', function () {
-    Auth::logout();
-    return redirect('/');
+  Auth::logout();
+  return redirect('/');
 })->name('logout-user');
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::resource('masjid', MasjidController::class);
+  Route::resource('masjid', MasjidController::class);
 
-    Route::middleware(EnsureDataMasjidCompleted::class)->group(function () {
-        Route::resource('kurban-peserta', KurbanPesertaController::class);
-        Route::resource('peserta', PesertaController::class);
-        Route::resource('kurban-hewan', KurbanHewanController::class);
-        Route::resource('kurban', KurbanController::class);
-        Route::resource('masjid-bank', MasjidBankController::class);
-        Route::resource('informasi', InformasiController::class);
-        Route::resource('kategori', KategoriController::class);
-        Route::resource('profil', ProfilController::class);
-        Route::resource('kas', KasController::class);
-        Route::resource('user-profil', UserProfilController::class);
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    });
+  Route::middleware(EnsureDataMasjidCompleted::class)->group(function () {
+    Route::resource('infaq', InfaqController::class);
+    Route::resource('kurban-peserta', KurbanPesertaController::class);
+    Route::resource('peserta', PesertaController::class);
+    Route::resource('kurban-hewan', KurbanHewanController::class);
+    Route::resource('kurban', KurbanController::class);
+    Route::resource('masjid-bank', MasjidBankController::class);
+    Route::resource('informasi', InformasiController::class);
+    Route::resource('kategori', KategoriController::class);
+    Route::resource('profil', ProfilController::class);
+    Route::resource('kas', KasController::class);
+    Route::resource('user-profil', UserProfilController::class);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  });
 });

@@ -3,7 +3,7 @@
 @section('content')
   <h1 class="h3 mb-3">{{ isset($kas->id) ? 'Edit Data Kas' : 'Form Transaksi Kas' }}</h1>
   <div class="row">
-    <div class="col-12">
+    <div class="col-6">
       <div class="card">
         <div class="card-body">
 
@@ -56,7 +56,8 @@
           </div>
 
 
-          {!! Form::submit(isset($kas->id) ? 'Update' : 'Simpan', ['class' => 'btn btn-success mb-3']) !!}
+          {!! Form::submit(isset($kas->id) ? 'Update' : 'Simpan', ['class' => 'btn btn-primary']) !!}
+          <a href="/kas" class="btn btn-outline-secondary">Kembali</a>
 
           {!! Form::close() !!}
         </div>

@@ -45,6 +45,7 @@
             <td colspan="4" class="text-center fw-bold">Total</td>
             <td class="text-end">{{ formatRupiah($totalPemasukan, true) }}</td>
             <td class="text-end">{{ formatRupiah($totalPengeluaran, true) }}</td>
+            <td class="text-end">{{ formatRupiah($saldoAkhir, true) }}</td>
           </tr>
         </tfoot>
       </table>
