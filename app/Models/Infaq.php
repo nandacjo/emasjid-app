@@ -13,6 +13,11 @@ class Infaq extends Model
 
   protected $guarded = ['id'];
 
+  public function kas()
+  {
+    return $this->hasOne(Kas::class);
+  }
+
   public function resolveRouteBinding($value, $field = null)
   {
     return $this->where('masjid_id', auth()->user()->masjid_id)

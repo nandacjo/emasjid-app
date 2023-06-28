@@ -69,17 +69,19 @@ class InfaqController extends Controller
     // Cek apakah jenis adalah uang, kalau iya maka akan di save di tabel kas
     if ($infaq->jenis == 'uang') {
       $kas = new Kas();
+      $kas->infaq_id = $infaq->id;
       $kas->masjid_id = $request->user()->masjid_id;
       $kas->tanggal = $infaq->created_at;
       $kas->kategori = 'infaq-' . $infaq->sumber;
       $kas->keterangan = 'Infaq ' . $infaq->sumber . ' dari ' . $infaq->atas_nama;
       $kas->jenis = 'masuk';
       $kas->jumlah = $infaq->jumlah;
+      $kas->saldo = $kas->masjid->saldo_akhir + $infaq->jumlah;
       $kas->save();
     }
     DB::commit();
 
-    flash('Data infaq berhasil disimpan dan tersimpan di kas mesjid');
+    flash('Data infaq berhasil disimpan dan tersimpan di kas mesjid')->success();
     return back();
   }
 
@@ -107,7 +109,17 @@ class InfaqController extends Controller
    */
   public function update(UpdateInfaqRequest $request, Infaq $infaq)
   {
-    //
+    $requestData = $request->validated();
+
+    DB::beginTransaction();
+    $infaq->update($requestData);
+    $kas = $infaq->kas;
+    $kas->jumlah = $infaq->jumlah;
+    $kas->save();
+    DB::commit();
+
+    flash('Data infaq berhasil diubah')->success();
+    return back();
   }
 
   /**
@@ -115,6 +127,12 @@ class InfaqController extends Controller
    */
   public function destroy(Infaq $infaq)
   {
-    //
+    if ($infaq->kas != null) {
+      $infaq->kas->delete();
+    }
+
+    $infaq->delete();
+    flash('Data infaq berhasil dihapus')->success();
+    return back();
   }
 }

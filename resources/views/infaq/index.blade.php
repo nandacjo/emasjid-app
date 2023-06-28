@@ -100,7 +100,7 @@
                 <!-- Tombol Delete -->
                 {!! Form::open([
                     'method' => 'DELETE',
-                    'route' => ['kas.destroy', $data->id],
+                    'route' => ['infaq.destroy', $data->id],
                     'style' => 'display.inline',
                 ]) !!}
                 @csrf
