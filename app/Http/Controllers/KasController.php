@@ -116,6 +116,12 @@ class KasController extends Controller
   public function destroy($id)
   {
     $kas = Kas::findOrFail($id);
+
+    if ($kas->infaq_id != null) {
+      flash('Data kas gagal dihapus. Data kas ini terhubung dengan data infaq, silahkan hapus data melalui menu infaq')->error();
+      return back();
+    }
+
     $kas->delete();
     flash('Data kas berhasil disimpan');
     return redirect()->route('kas.index');

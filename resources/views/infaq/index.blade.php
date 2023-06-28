@@ -54,11 +54,11 @@
       </div>
 
       <div>
-        <label for="q">Keterangan transaski</label>
+        <label for="q">Sumber / Atas Nama</label>
         <div class="input-group">
           {!! Form::text('q', request('q'), [
               'class' => 'form-control',
-              'placeholder' => 'Keterangan Transaksi',
+              'placeholder' => 'Sumber / Atas Nama',
               'id' => 'q',
           ]) !!}
           <button class="btn btn-primary fw-bold" type="submit" id="button-addon2">CARI</button>

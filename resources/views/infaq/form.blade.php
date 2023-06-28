@@ -36,6 +36,13 @@
             <span class="text-danger">{{ $errors->first('jenis') }}</span>
           </div>
 
+          <!-- Jumlah -->
+          <div class="form-group mb-3">
+            {!! Form::label('jumlah', 'Jumlah', ['class' => 'form-label']) !!}
+            {!! Form::text('jumlah', null, ['class' => 'form-control rupiah']) !!}
+            <span class="text-danger">{{ $errors->first('jumlak') }}</span>
+          </div>
+
           <!-- Atas Nama -->
           <div class="form-group mb-3">
             {!! Form::label('atas_nama', 'Keterangan - boleh dikosongkan') !!}
@@ -45,13 +52,6 @@
                 'rows' => 3,
             ]) !!}
             <span class="text-danger">{{ $errors->first('atas_nama') }}</span>
-          </div>
-
-          <!-- Jumlah -->
-          <div class="form-group mb-3">
-            {!! Form::label('jumlah', 'Jumlah', ['class' => 'form-label']) !!}
-            {!! Form::text('jumlah', null, ['class' => 'form-control rupiah']) !!}
-            <span class="text-danger">{{ $errors->first('jumlak') }}</span>
           </div>
 
           <!-- Satuan -->

@@ -20,7 +20,8 @@ class InfaqController extends Controller
   public function index(Request $request)
   {
     $query = Model::UserMasjid()
-      ->when($request->filled('q'), fn ($query) => $query->where('keterangan', 'LIKE', '%' . $request->q . '%'))
+      ->when($request->filled('q'), fn ($query) => $query->where('atas_nama', 'LIKE', '%' . $request->q . '%')
+        ->orWhere('sumber', 'LIKE', '%' . $request->q . '%'))
       ->when($request->filled('tanggal_mulai'), fn ($query) => $query->whereDate('created_at', '>=', $request->tanggal_mulai))
       ->when($request->filled('tanggal_selesai'), fn ($query) => $query->whereDate('created_at', '<=', $request->tanggal_selesai))
       ->latest()
