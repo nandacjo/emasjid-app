@@ -52,38 +52,38 @@ class Kas extends Model
     return 'id';
   }
 
-  protected static function booted()
-  {
-    static::created(function (Kas $kas) {
-      $saldoAkhir = Kas::SaldoAkhir();
-      if ($kas->jenis == 'masuk') {
-        $saldoAkhir += $kas->jumlah;
-      } else {
-        $saldoAkhir -= $kas->jumlah;
-      }
-      $kas->masjid->update(['saldo_akhir' => $saldoAkhir]);
-    });
+  // protected static function booted()
+  // {
+  //   static::created(function (Kas $kas) {
+  //     $saldoAkhir = Kas::SaldoAkhir();
+  //     if ($kas->jenis == 'masuk') {
+  //       $saldoAkhir += $kas->jumlah;
+  //     } else {
+  //       $saldoAkhir -= $kas->jumlah;
+  //     }
+  //     $kas->masjid->update(['saldo_akhir' => $saldoAkhir]);
+  //   });
 
-    static::deleted(function (Kas $kas) {
-      $saldoAkhir = Kas::SaldoAkhir();
-      if ($kas->jenis == 'masuk') {
-        $saldoAkhir -= $kas->jumlah;
-      } else {
-        $saldoAkhir += $kas->jumlah;
-      }
-      $kas->masjid->update(['saldo_akhir' => $saldoAkhir]);
-    });
+  //   static::deleted(function (Kas $kas) {
+  //     $saldoAkhir = Kas::SaldoAkhir();
+  //     if ($kas->jenis == 'masuk') {
+  //       $saldoAkhir -= $kas->jumlah;
+  //     } else {
+  //       $saldoAkhir += $kas->jumlah;
+  //     }
+  //     $kas->masjid->update(['saldo_akhir' => $saldoAkhir]);
+  //   });
 
-    static::updated(function (Kas $kas) {
-      $saldoAkhir = Kas::SaldoAkhir();
-      if ($kas->jenis == 'masuk') {
-        $saldoAkhir -= $kas->getOriginal('jumlah');
-        $saldoAkhir += $kas->jumlah;
-      } else {
-        $saldoAkhir += $kas->getOriginal('jumlah');
-        $saldoAkhir -= $kas->jumlah;
-      }
-      $kas->masjid->update(['saldo_akhir' => $saldoAkhir]);
-    });
-  }
+  //   static::updated(function (Kas $kas) {
+  //     $saldoAkhir = Kas::SaldoAkhir();
+  //     if ($kas->jenis == 'masuk') {
+  //       $saldoAkhir -= $kas->getOriginal('jumlah');
+  //       $saldoAkhir += $kas->jumlah;
+  //     } else {
+  //       $saldoAkhir += $kas->getOriginal('jumlah');
+  //       $saldoAkhir -= $kas->jumlah;
+  //     }
+  //     $kas->masjid->update(['saldo_akhir' => $saldoAkhir]);
+  //   });
+  // }
 }

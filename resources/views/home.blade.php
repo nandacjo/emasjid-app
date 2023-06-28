@@ -62,7 +62,7 @@
       <div class="col-xl-6 col-xxl-7">
         <div class="card flex-fill w-100">
           <div class="card-header">
-            <h5 class="card-title mb-0">Recent Movement</h5>
+            <h5 class="card-title mb-0">Grafi Infaq Bulanan</h5>
           </div>
           <div class="card-body py-3">
             <div class="chart chart-sm">
@@ -78,8 +78,7 @@
       <div class="col-12 col-lg-8 col-xxl-9 d-flex">
         <div class="card flex-fill">
           <div class="card-header">
-
-            <h5 class="card-title mb-0">Latest Projects</h5>
+            <h5 class="card-title mb-0">Transaksi Kas Terbaru</h5>
           </div>
           <table class="table table-hover my-0">
             <thead>
@@ -103,7 +102,6 @@
               @empty
                 <td colspan="5">Data kas tidak ada</td>
               @endforelse
-
             </tbody>
           </table>
         </div>
@@ -111,7 +109,6 @@
       <div class="col-12 col-lg-4 col-xxl-3 d-flex">
         <div class="card flex-fill w-100">
           <div class="card-header">
-
             <h5 class="card-title mb-0">Monthly Sales</h5>
           </div>
           <div class="card-body d-flex w-100">
