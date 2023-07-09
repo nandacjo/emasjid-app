@@ -30,7 +30,7 @@ class InfaqBulananChart
     return $this->chart->lineChart()
       ->setTitle('Data infaq bulanan')
       ->setSubtitle('Total penerimaan infaq setiap bulan.')
-      ->addData('Total Infaq', number_format($dataTotalInfaq, 0, ',', '.'))
+      ->addData('Total Infaq', $dataTotalInfaq)
       ->setHeight(280)
       ->setXAxis($dataBulan);
   }

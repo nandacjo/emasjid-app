@@ -26,7 +26,18 @@ class HomeController extends Controller
    */
   public function index(InfaqBulananChart $chart)
   {
-    $data['chart'] = $chart->build();
+    $tahun = date('Y');
+    $bulan = date('m');
+    for ($i = 1; $i <= $bulan; $i++) {
+
+      $totalInfaq = Infaq::userMasjid()->whereYear('created_at', $tahun)->whereMonth('created_at', $i)->sum('jumlah');
+      // $dataBulan[] = Carbon::create()->month($i)->format('F'); // mengubah angka menjadi nama bulan
+      $dataBulan[] = functionAngkaToBulan($i);
+      $dataTotalInfaq[] = $totalInfaq;
+    }
+    $data['dataBulan'] = $dataBulan;
+    $data['dataTotalInfaq'] = $dataTotalInfaq;
+    // $data['chart'] = $chart->build(); menggunakan larapex untuk membuat chart
     $data['saldoAkhir']  = Kas::SaldoAkhir();
     $data['totalInfaq'] = Infaq::userMasjid()->whereDate('created_at', now()->format('Y-m-d'))->sum('jumlah');
     $data['kas'] = Kas::userMasjid()->latest()->take(7)->get();
