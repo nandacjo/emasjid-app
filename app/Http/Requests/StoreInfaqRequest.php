@@ -22,6 +22,7 @@ class StoreInfaqRequest extends FormRequest
   public function rules(): array
   {
     return [
+      'created_at' => 'required|date',
       'sumber' => 'required',
       'atas_nama' => 'nullable',
       'satuan' => 'required',

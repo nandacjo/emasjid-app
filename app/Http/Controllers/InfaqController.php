@@ -64,23 +64,15 @@ class InfaqController extends Controller
     // Cek apakah ada request->atas_nama kalau tidak maka nilai defaultnya adalah Hamba Allah
     $requestData['atas_nama'] = $requestData['atas_nama'] ?? 'Hamba Allah';
     // Save data infaq ket table infaw mesjid
-    DB::beginTransaction();
-    $infaq = Infaq::create($requestData);
-
-    // Cek apakah jenis adalah uang, kalau iya maka akan di save di tabel kas
-    if ($infaq->jenis == 'uang') {
-      $kas = new Kas();
-      $kas->infaq_id = $infaq->id;
-      $kas->masjid_id = $request->user()->masjid_id;
-      $kas->tanggal = $infaq->created_at;
-      $kas->kategori = 'infaq-' . $infaq->sumber;
-      $kas->keterangan = 'Infaq ' . $infaq->sumber . ' dari ' . $infaq->atas_nama;
-      $kas->jenis = 'masuk';
-      $kas->jumlah = $infaq->jumlah;
-      $kas->saldo = $kas->masjid->saldo_akhir + $infaq->jumlah;
-      $kas->save();
+    try {
+      DB::beginTransaction();
+      Infaq::create($requestData);
+      DB::commit();
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      flash('Data infaq gagalh disimpan, error: ' . $th->getMessage())->error();
+      return back();
     }
-    DB::commit();
 
     flash('Data infaq berhasil disimpan dan tersimpan di kas mesjid')->success();
     return back();
@@ -112,12 +104,15 @@ class InfaqController extends Controller
   {
     $requestData = $request->validated();
 
-    DB::beginTransaction();
-    $infaq->update($requestData);
-    $kas = $infaq->kas;
-    $kas->jumlah = $infaq->jumlah;
-    $kas->save();
-    DB::commit();
+    try {
+      DB::beginTransaction();
+      $infaq->update($requestData);
+      DB::commit();
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      flash('Data infaq gagal disimpan, error: ' . $th->getMessage())->error();
+      return back();
+    }
 
     flash('Data infaq berhasil diubah')->success();
     return back();
@@ -128,11 +123,15 @@ class InfaqController extends Controller
    */
   public function destroy(Infaq $infaq)
   {
-    if ($infaq->kas != null) {
-      $infaq->kas->delete();
+    try {
+      DB::beginTransaction();
+      $infaq->delete();
+      DB::commit();
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      flash('Data infaq gagal dihapus, error: ' . $th->getMessage())->error();
+      return back();
     }
-
-    $infaq->delete();
     flash('Data infaq berhasil dihapus')->success();
     return back();
   }

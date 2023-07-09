@@ -52,6 +52,8 @@ class Kas extends Model
     return 'id';
   }
 
+
+
   // protected static function booted()
   // {
   //   static::created(function (Kas $kas) {

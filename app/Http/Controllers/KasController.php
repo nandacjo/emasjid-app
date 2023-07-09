@@ -77,8 +77,6 @@ class KasController extends Controller
     // $kas->saldo_akhir = $saldoAkhir;
     $kas->save();
 
-
-
     flash('Data kas berhasil disimpan.')->success();
     return back();
   }
@@ -104,6 +102,7 @@ class KasController extends Controller
       'jumlah' => 'required'
     ]);
     $jumlah = str_replace('.', '', $requestData['jumlah']);
+
     $kas = Kas::findOrFail($id);
     $requestData['jumlah'] = $jumlah;
     $kas->fill($requestData);

@@ -13,6 +13,13 @@
               'method' => isset($model->id) ? 'PUT' : 'POST',
           ]) !!}
 
+          <!-- Created at -->
+          <div class="form-group mb-3">
+            {!! Form::label('created_at', 'Tanggal', ['class' => 'form-label']) !!}
+            {!! Form::date('created_at', $model->created_at ?? now(), ['class' => 'form-control']) !!}
+            <span class="text-danger">{{ $errors->first('created_at') }}</span>
+          </div>
+
           <!-- Sumber -->
           <div class="form-group mb-3">
             {!! Form::label('sumber', 'Sumber Dana Infaq') !!}
