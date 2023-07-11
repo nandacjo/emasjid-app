@@ -32,7 +32,7 @@
                                 'class' => 'form-control',
                             ]),
                         ) !!}
-                        <span class="text-danger">{{ $errors->first('judul') }}</span>
+                        <span class="text-danger">@errorInput('judul')</span>
                     </div>
 
                     <!-- Konten -->
@@ -43,7 +43,7 @@
                             'placeholder' => 'Isi profil',
                             'id' => 'summernote',
                         ]) !!}
-                        <span class="text-danger">{{ $errors->first('konten') }}</span>
+                        <span class="text-danger">@errorInput('konten')</span>
                     </div>
 
                     <!-- Button  -->

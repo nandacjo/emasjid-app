@@ -17,7 +17,7 @@
                     <div class="form-group mb-3">
                         {!! Form::label('tahun_hijriah', 'Tahun Hijriah') !!}
                         {!! Form::selectRange('tahun_hijriah', 1455, 1460, null, ['class' => 'form-control']) !!}
-                        <span class="text-danger">{{ $errors->first('tahun_hijriah') }}</span>
+                        <span class="text-danger">@errorInput('tahun_hijriah')</span>
                     </div>
 
                     <!-- Tahun masehi -->

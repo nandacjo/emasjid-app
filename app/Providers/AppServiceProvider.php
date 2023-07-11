@@ -22,26 +22,33 @@ use App\Repository\ProfilRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        $this->app->bind(ProfilRepositoryInterface::class, ProfilRepository::class);
-        $this->app->bind(KategoriRepositoryInterface::class, KategoriRepository::class);
-        $this->app->bind(InformasiRepositoryInterface::class, InformasiRepository::class);
-        $this->app->bind(MasjidBankRepositoryInterface::class, MasjidBankRepository::class);
-        $this->app->bind(KurbanRepositoryInterface::class, KurbanRepository::class);
-        $this->app->bind(KurbanHewanRepositoryInterface::class, KurbanHewanRepository::class);
-        $this->app->bind(KurbanPesertaRepositoryInterface::class, KurbanPesertaRepository::class);
-        $this->app->bind(PesertaRepositoryInterface::class, PesertaRepository::class);
-    }
+  /**
+   * Register any application services.
+   */
+  public function register(): void
+  {
+    $this->app->bind(ProfilRepositoryInterface::class, ProfilRepository::class);
+    $this->app->bind(KategoriRepositoryInterface::class, KategoriRepository::class);
+    $this->app->bind(InformasiRepositoryInterface::class, InformasiRepository::class);
+    $this->app->bind(MasjidBankRepositoryInterface::class, MasjidBankRepository::class);
+    $this->app->bind(KurbanRepositoryInterface::class, KurbanRepository::class);
+    $this->app->bind(KurbanHewanRepositoryInterface::class, KurbanHewanRepository::class);
+    $this->app->bind(KurbanPesertaRepositoryInterface::class, KurbanPesertaRepository::class);
+    $this->app->bind(PesertaRepositoryInterface::class, PesertaRepository::class);
+  }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
-    }
+  /**
+   * Bootstrap any application services.
+   */
+  public function boot(): void
+  {
+    // cara membuat blade directive activeMenru
+    \Blade::directive('activeMenu', function ($route) {
+      return "{{ Route::is($route) ? 'active' : '' }}";
+    });
+
+    \Blade::directive('errorInput', function ($error) {
+      return "{{ \$errors->first($error) }}";
+    });
+  }
 }
