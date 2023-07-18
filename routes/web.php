@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\InfaqController;
-use App\Http\Controllers\InformasiController;
-use App\Http\Controllers\KasController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\KurbanController;
-use App\Http\Controllers\KurbanHewanController;
-use App\Http\Controllers\KurbanPesertaController;
-use App\Http\Controllers\MasjidBankController;
-use App\Http\Controllers\MasjidController;
-use App\Http\Controllers\PesertaController;
-use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\UserProfilController;
-use App\Http\Middleware\EnsureDataMasjidCompleted;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KasController;
+use App\Http\Controllers\InfaqController;
+use App\Http\Controllers\KurbanController;
+use App\Http\Controllers\MasjidController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\MasjidBankController;
+use App\Http\Controllers\UserProfilController;
+use App\Http\Controllers\KurbanHewanController;
+use App\Http\Controllers\KurbanPesertaController;
+use App\Http\Middleware\EnsureDataMasjidCompleted;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
@@ -34,9 +35,7 @@ Route::get('logout-user', function () {
   return redirect('/');
 })->name('logout-user');
 
-Route::get('/', function () {
-  return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Auth::routes();
 
@@ -64,12 +63,10 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
   $request->fulfill();
-
   return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
   $request->user()->sendEmailVerificationNotification();
-
   return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
