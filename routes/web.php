@@ -13,10 +13,10 @@ use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserProfilController;
 use App\Http\Middleware\EnsureDataMasjidCompleted;
-use App\Models\KurbanPeserta;
-use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -41,8 +41,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-  Route::resource('masjid', MasjidController::class);
-
+  Route::resource('masjid', MasjidController::class)->middleware('verified');
   Route::middleware(EnsureDataMasjidCompleted::class)->group(function () {
     Route::resource('infaq', InfaqController::class);
     Route::resource('kurban-peserta', KurbanPesertaController::class);
@@ -58,3 +57,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
   });
 });
+
+Route::get('/email/verify', function () {
+  return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+  $request->fulfill();
+
+  return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+  $request->user()->sendEmailVerificationNotification();
+
+  return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
